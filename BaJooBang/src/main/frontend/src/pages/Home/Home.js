@@ -1,95 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './Home.css'; 
-import { ReactComponent as Arrow } from '../../components/images/arrow.svg';
-import video from '../../components/images/background.mp4';
-import video2 from '../../components/images/moving_people.mp4';
-import video3 from '../../components/images/moving_house.mp4';
-import { ReactComponent as Twitter } from '../../components/images/twitter.svg';
-import { ReactComponent as Instagram } from '../../components/images/instagram.svg';
-import { ReactComponent as Facebook } from '../../components/images/facebook.svg';
-
-export function Footer() {
-  return (
-    <div className="footer">
-      <div className="footer-content">
-        
-        <div className="footer-links">
-          <a href="/about">회사 소개</a>
-          <a href="/contact">연락처</a>
-          <a href="/privacy">개인정보 처리방침</a>
-          <a href="/terms">이용약관</a>
-          <a href="/sitemap">사이트맵</a>
-        </div>
-        
-        <div className="footer-social">
-          <a href="https://facebook.com"><i className="fab fa-facebook-f"><Facebook/></i></a>
-          <a href="https://twitter.com"><i className="fab fa-twitter"><Twitter/></i></a>
-          <a href="https://instagram.com"><i className="fab fa-instagram"><Instagram/></i></a>
-        </div>
-        
-        
-        <div className="footer-bottom">
-          <p>© 2024 바줘방. All rights reserved.</p>
-          <p>Contact us at : bajoobang@gmail.com</p>
-        </div>
-      </div>
-    </div>
-  );
-}
+import { ReactComponent as Toggle } from '../../components/images/toggle.svg';
+import { ReactComponent as Pin } from '../../components/images/pin.svg';
+import { ReactComponent as File } from '../../components/images/file.svg';
+import { ReactComponent as Number } from '../../components/images/number.svg';
+import { ReactComponent as LogoW } from '../../components/images/logo-white.svg';
 
 function Homepage() {
-  useEffect(() => {
-    const fadeInElements = document.querySelectorAll('.fade-in-scroll');
-
-    const handleScroll = () => {
-      fadeInElements.forEach((element, index) => {
-        const rect = element.getBoundingClientRect();
-        if (rect.top <= window.innerHeight) {
-          setTimeout(() => {
-            element.classList.add('visible');
-          }, index * 500); // 요소별로 500ms 지연
-        }
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
   return (
     <div className="Homepage">
-      <video id="video1" autoPlay loop muted>
-        <source src={video} type="video/mp4" />
-      </video>
-      <div className="content">
-        <div className="center-text">
-          <h1 className="fade-in">더 빠르고 편리한 발품을 위해</h1>
-          <p className="fade-in description">바줘방은 서울 지역 자취방을 알아보기 위해 돈과 시간을 투자해야하는 이들에게, <p></p>돈과 시간을 절약해주기 위한 효율적인 대리 발품인을 이어줍니다.</p>
+
+      <div className="main-content">
+        <h1 className="main-title">ANYONE <span className="main-title2">Can Do This</span></h1>
+        <h1 className="main-title">ANYWHERE, ANYTIME</h1>
+        <p className="description">자취방이 필요한 누구나, 용돈이 필요한 누군가 <p>houser가 해결해드립니다</p></p>
+        <div className="buttons">
+          <button className="main-button1">자취방 발품이 필요하신가요?</button>
+          <button className="main-button2">용돈이 필요하신가요?</button>
         </div>
-        <div className="scroll-arrow"><Arrow /></div>
-        <div className="reason">
-          <p className="reason_title">why use?</p>
-          <h1>누구나 언제든 어디서든 발품을 팔 수 있다!!</h1>
-        </div>
-        <div className="row-container">
-          <div className="video-row">
-            <video id="video2" autoPlay loop muted className="fade-in-scroll">
-              <source src={video2} type="video/mp4" />
-            </video>
-            <video id="video3" autoPlay loop muted className="fade-in-scroll">
-              <source src={video3} type="video/mp4" />
-            </video>
-          </div>
-          <div className="three_reason">
-            <h2 className="part fade-in-scroll"><span className="highlight">누구나</span> 집을 알아볼 수 있도록</h2>
-            <h2 className="part fade-in-scroll"><span className="highlight">언제나</span> 집을 알아볼 수 있도록</h2>
-            <h2 className="part fade-in-scroll"><span className="highlight">언제든지</span> 집을 알아볼 수 있도록</h2>
-          </div>
-        </div>
-        <Footer />
       </div>
+
+      <footer className="footer">
+        <div className="footer-content">
+          <div className="footer-logo"><LogoW/>
+          <p>더 많은 정보를 얻고 싶으시다면 하단 아이콘을 클릭해주세요</p>
+          </div>
+          <div className="footer-links">
+            <div className="footer-column">
+              <h4>Quick Links</h4>
+              <a href="/home"><Toggle></Toggle> Home</a>
+              <a href="/about"><Toggle></Toggle>About Us</a>
+              <a href="/map"><Toggle></Toggle>발품지도</a>
+              <a href="/sales"><Toggle></Toggle>매물지도</a>
+              <a href="/mypage"><Toggle></Toggle>마이페이지</a>
+            </div>
+            <div className="footer-column">
+              <h4>Be With You</h4>
+              <p><Pin></Pin>Korea, Dongguk University</p>
+              <p><File></File>Hello@Email.com</p>
+              <p><Number></Number>+62 123 456 789</p>
+            </div>
+            <div className="footer-column">
+              <h4>Developers</h4>
+              <p><Toggle></Toggle>Kim Hyo-beom</p>
+              <p><Toggle></Toggle>Choi Woosung</p>
+              <p><Toggle></Toggle>Park Joo-hyung</p>
+              <p><Toggle></Toggle>Kim Yumin</p>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

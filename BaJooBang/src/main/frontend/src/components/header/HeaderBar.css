@@ -1,50 +1,63 @@
+/* Header 전체 스타일 */
 .header-bar {
-  height: 40px;
-  background-color: #559F5D; /* 배경색 설정 */
-  padding: 10px 20px; /* 패딩 설정 */
-  color: white; /* 텍스트 색상을 흰색으로 설정 */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative; /* z-index를 사용하기 위해 position 설정 필요 */
-  z-index: 10;
+  padding: 10px 50px;
+  background-color: none; /* 배경 색상 조정 */
 }
 
-.header-bar a {
-  color: inherit; /* 부모 요소의 색상을 상속 */
-  text-decoration: none; /* 밑줄 제거 */
+/* 로고 스타일 */
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+  color: #588157; /* 로고 색상 조정 */
+  text-decoration: none;
 }
 
-.outBox {
-  display: flex; /* 이 선언을 통해 자식 요소들을 가로로 정렬 */
-  justify-content: center; /* 가로 축 중앙 정렬 */
-  align-items: center; /* 세로 축 중앙 정렬 */
-  /* background-color: aqua; */
+.logo h1 {
+  margin: 0;
+  color: #588157;
+  font-family: 'Arial', sans-serif;
 }
 
-.innerBox {
-  width: 100px;
-  height: 40px;
+/* 네비게이션 스타일 */
+.navbar {
   display: flex;
-  margin: 10px;
-  /* background-color: blue; */
-  border-radius: 15px;
-  justify-content: center;
-  align-items: center;
+  gap: 30px;
 }
 
-.innerBox:hover{
-  background-color: #4A8951;
-  background-color: #4A8951;
+.nav-item {
+  color: #000000 !important; /* 네비게이션 항목 색상 검정색으로 설정 */
+  text-decoration: none;
+  font-size: 16px;
+  padding-right: 50px;
+  transition: color 0.3s ease;
 }
- .innerBox .active {
-  width: 150px;
-  height: 40px;
-  display: flex;
 
-  /* background-color: blue; */
-  border-radius: 15px;
-  justify-content: center;
-  align-items: center;
-  background-color: #4A8951;
- }
+.nav-item:hover,
+.nav-item.active {
+  color: #4f6a4d !important; /* 활성화된 항목 및 hover 시에도 검정색 유지 */
+}
+
+/* 로그인/회원가입 버튼 스타일 */
+.auth-buttons .login-btn {
+  background-color: #ffffff !important;
+  color: #3a3a3a;
+  padding: 10px 20px;
+  border: 2px solid #ffffff; /* 테두리 추가 */
+  border-radius: 20px;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.auth-buttons .login-btn:hover {
+  background-color: #d4c9b3 !important;
+  color: #2f2f2f;
+}
+
+/* 전체 레이아웃 조정 */
+.header-bar {
+  height: 80px;
+}

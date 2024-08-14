@@ -1,284 +1,162 @@
-.Homepage {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* 전체 화면 높이 */
-  /*background-color: rgba(0, 0, 0, 0.7); /* 검은색 반투명 배경 추가 */
-  position: relative; 
-  z-index: 1;
-}
-
-.center-text {
-  text-align: center;
-  margin-top: 900px;
-}
-.center-text h1 {
-  font-size: 50px;
-}
-.content2 {
-  position: relative;
-  margin-top :400px;
-}
-.highlight {
-  color: green; /* 초록색 글씨로 설정 */
-}
-.message-video {
-  position: absolute;
-  width: 100%; /* 필요에 따라 조정 */
-  height: auto; /* 비디오의 높이를 조정하려면 이 값을 조정 */
-  top: 0;
-}
-
-.message {
-  position: relative;
-  z-index: 2;
-  color: black;
-  opacity: 0; /* 초기 투명도 설정 */
-  transition: opacity 2s ease-in-out, transform 2s ease-in-out; /* 투명도와 위치 변화의 전환 효과 추가 */
-  margin-top: 20px;
-}
-
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInAnimation 2s ease-out forwards;
-}
-
-.fade-in.description {
-  animation-delay: 1s; /* 설명 텍스트에 약간의 지연을 추가 */
-}
-
-.fade-in-scroll {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 1s ease-out, transform 1s ease-out;
-}
-
-.fade-in-scroll.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@keyframes fadeInAnimation {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fade-in-out {
-  animation: fadeInOut 8s ease-in-out infinite; /* 수정된 애니메이션 적용 */
-}
-
-@keyframes fadeInOut {
-  0%, 100% {
-    opacity: 0;
-    transform: translateY(20px); /* 시작과 끝에 메시지가 아래로 조금 내려가면서 페이드 아웃 */
-  }
-  50% {
-    opacity: 1;
-    transform: translateY(0); /* 중간에 완전히 보이면서 원래 위치로 */
-  }
-}
-
-
-.scroll-arrow {
-  animation: blinkAnimation 1s infinite; /* 무한 반복 */
-  font-size: 24px; /* 화살표 크기 */
-  color: white; /* 화살표 색상 */
-  padding-top: 20px; /* 텍스트로부터 여백 */
-  margin-top: 140px; /* 화살표를 더 아래로 이동 */
-}
-.video-row {
-  padding-top: 10px; 
-  padding-right: 0;
-  height: auto;
-  position: relative;
-  left: -40%;
-  transform: translateX(50%);
-}
-
-video {
-  width: 10%; /* Set each video to take half the width of the container */
-  height: auto;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-@keyframes blinkAnimation {
-  0%, 100% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-#video1 {
-  width: 100%; /* 전체 너비를 차지하도록 설정 */
-  position: absolute; /* 절대 위치 지정 */
-  top: 0; /* 부모 요소 상단에 위치 */
-
-  opacity: 0.3;
-  filter: invert(100%); /*영상 반전요소*/
-  z-index: 0; /* 다른 요소 위에 위치하도록 설정 */
-}
-#video2, #video3 {
-  width: 20%; /* Set each video to take half the width of the container */
-  height: auto;
-  position: relative;
-  left: 85%;
-  transform: translateX(-50%);
-}
-
-.content {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 30%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.reason{
-  
-  position: absolute;
-  
-  padding-top: 800px;
-}
-
-.reason_title{
-  text-align: center;
-  padding-left: 0px;
-  
-}
-
-.row-container {
-  display: flex;
-  align-items: center; 
-  justify-content: space-around; 
-  width: 100%; 
-  padding-top: 400px; 
-
-}
-
-
-.three_reason {
-  width: 70%; 
-  border-right: 10px;
-  padding-top: 10px;
-  margin-right :80px;
-}
-
-.part{
-  margin : 50px;
-  margin-right: 150px;
-  text-align: center;
-  padding: 20px;
-  background-color: #FFFFDD;
-  border-radius: 10px;
-  color: gray; /* 글씨 색상을 회색으로 설정 */
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5); /* 박스에 그림자를 추가 */
-}
-.footer {
-  background-color: #353535; /* Dark background for contrast */
-  color: #ffffff;
-  padding: 2rem 0;
+/* 전체 레이아웃 및 스타일 */
+body, html {
+  margin: 0;
+  padding: 0;
   font-family: 'Arial', sans-serif;
-  width:100%;
-  padding :10px;
-  margin-top: 200px;
+  background: #F3ECDC; /* 배경색을 연한 베이지 톤으로 설정 */
+}
+
+/* 헤더 스타일 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background-color: #F3ECDC; /* 헤더 배경색을 연한 베이지 톤으로 설정 */
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+  color: #4f6a4d; /* 로고 색상 */
+}
+
+.navbar a {
+  color: #000; /* 네비게이션 글씨 색상을 검정색으로 설정 */
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.auth-buttons .login-btn {
+  background-color: #E8E5D4;
+  color: #3A3A3A;
+  padding: 10px 20px;
+  border: 2px solid #bbb; /* 테두리를 추가 */
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+/* 메인 콘텐츠 스타일 */
+.main-content {
+  text-align: center;
+  padding: 100px 20px;
+  color: #4f6a4d; /* 메인 타이틀 색상 */
+}
+
+.main-title {
+  font-size: 48px;
+  color: #344E41; /* 메인 타이틀 색상 */
+}
+.main-title2 {
+  font-size :40px;
+  color :#A3B18A;
+}
+
+.description {
+  font-size: 16px;
+  margin: 20px 0;
+  color: #000000;
+  text-align: left;
+  padding-left: 515px;
+}
+
+.buttons {
+  margin-top: 30px;
+}
+
+.main-button1 {
+  background-color: #A3B18A;
+  color: #344E41;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 30px;
+  margin: 10px;
+  font-size: 16px;
+  margin-right: 60px;
+}
+.main-button2 {
+  background-color: #344E41;
+  color: #ffffff;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 30px;
+  margin: 10px;
+  font-size: 16px;
+}
+
+/* 푸터 스타일 */
+
+.footer {
+  background-color: #2F4A3D; 
+  color: #F3ECDC;
+  padding: 40px 0;
+  text-align: center;
+  align-items: center;
 }
 
 .footer-content {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  max-width: 1200px;
-  margin: 0 auto;
+  align-items: flex-start;
+  margin: 0 ;
+  padding: 10px 60px;
 }
 
 .footer-logo {
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-size: 32px; 
+  color: #908f8c; 
 }
 
-.footer-logo img {
-  width: 120px; /* Adjust the size of your logo */
+.footer-content p {
+  font-size: 14px;
+  color: #B2B2B2; 
+  margin: 5px 0;
+  
+}
+.footer-column{
+  margin-right: 80px;
+  margin-left:40px;
+}
+.footer-column h4 {
+  font-size: 23px;
+  color: #F3ECDC; 
+  margin-top: 0px;
 }
 
-.footer-links,
-.footer-social {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  list-style: none;
-  padding: 0;
-  margin-top: 20px;
+.footer-column p, .footer-column a {
+  font-size: 14px;
+  color: #F3ECDC; 
+  margin: 5px 0;
 }
 
-.footer-links a,
-.footer-social a {
-  color: #cfcfcf; /* Light grey for contrast */
+.footer-column a {
   text-decoration: none;
-  font-size: 16px;
-  transition: color 0.3s ease;
-  padding :5px;
+  display: flex;
 }
 
-.footer-links a:hover,
-.footer-social a:hover {
-  color: #ffffff; /* Bright color on hover */
+.footer-column a:hover {
+  color: #ffffff; 
 }
 
-.footer-social svg {
-  fill: currentColor; /* SVG icons inherit the text color */
-  width: 24px; /* Adjust icon size */
-  height: 24px;
+.footer-links {
+  display: flex;
+  gap: 30px; 
 }
 
-.newsletter-signup {
-  background-color: #2a2a2a; /* Slightly lighter than footer background */
-  padding: 20px;
-  margin-top: 20px;
-  width: 100%;
-  box-sizing: border-box;
+.footer-column {
+  flex: 1; 
 }
 
-.newsletter-input {
-  padding: 10px;
-  margin-right: 10px;
-  border: none;
-  border-radius: 5px;
-  width: 300px;
+.footer-logo {
+  flex: 2; 
 }
 
-.newsletter-button {
-  background-color: #0b3c23; /* Theme color */
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.footer-column p {
+  margin-bottom: 10px; 
+  display: flex;
 }
 
-.newsletter-button:hover {
-  background-color: #088017; /* Slightly lighter for hover effect */
-}
-
-.footer-bottom {
-  font-size: 0.8rem;
-  margin-top: 20px;
-  text-align: center;
+.footer-column p:last-child {
+  margin-bottom: 0; 
 }
 

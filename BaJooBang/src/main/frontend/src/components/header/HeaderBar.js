@@ -13,7 +13,7 @@ function HeaderBar() {
     if (!confirmLogout) return;
 
     try {
-      const sessionId = sessionStorage.getItem('sessionId'); // 세션 ID를 세션 스토리지에서 가져옴
+      const sessionId = sessionStorage.getItem('sessionId');
       const response = await axios.post('/logout', {}, {
         headers: {
           'Authorization': `Bearer ${sessionId}`,
@@ -21,7 +21,7 @@ function HeaderBar() {
         withCredentials: true,
       });
       console.log('Logout successful:', response.data);
-      logout(); // AuthContext의 logout 함수 호출
+      logout();
       alert('로그아웃되었습니다.');
       navigate('/login');
     } catch (error) {
@@ -32,37 +32,33 @@ function HeaderBar() {
 
   return (
     <header className="header-bar">
-      <NavLink to="/" exact>
-        <h1>바줘방</h1>
+      <NavLink to="/" exact className="logo">
+        <h1>houser</h1>
       </NavLink>
-      <div className='outBox'>
-        <div className='innerBox'>
-          <NavLink to="/domap" activeClassName="active">
-            <p>발품 지도</p>
-          </NavLink>
-        </div>
-        <div className='innerBox'>
-          <NavLink to="/helpmap" activeClassName="active">
-            <p>매물 지도</p>
-          </NavLink>
-        </div>
+      <nav className="navbar">
+        <NavLink to="/" exact activeClassName="active" className="nav-item">
+         HOME
+        </NavLink>
+        <NavLink to="/about" activeClassName="active" className="nav-item">
+          ABOUT US
+        </NavLink>
+        <NavLink to="/domap" activeClassName="active" className="nav-item">
+          발품지도
+        </NavLink>
+        <NavLink to="/helpmap" activeClassName="active" className="nav-item">
+          매물지도
+        </NavLink>
+        <NavLink to="/mypage" activeClassName="active" className="nav-item">
+          마이페이지
+        </NavLink>
+      </nav>
+      <div className="auth-buttons">
         {isLoggedIn ? (
-          <>
-            <div className='innerBox'>
-              <NavLink to="/member" activeClassName="active">
-                <p>마이페이지</p>
-              </NavLink>
-            </div>
-            <div className='innerBox'>
-              <p onClick={handleLogout}>로그아웃</p>
-            </div>
-          </>
+          <span className="login-btn" onClick={handleLogout}>로그아웃</span>
         ) : (
-          <div className='innerBox'>
-            <NavLink to="/login">
-              <p>로그인</p>
-            </NavLink>
-          </div>
+          <NavLink to="/login" className="login-btn">
+            로그인 / 회원가입
+          </NavLink>
         )}
       </div>
     </header>
