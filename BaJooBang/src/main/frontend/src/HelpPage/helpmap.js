@@ -9,19 +9,16 @@ import { positions } from './kakaomap';
 const SearchBar = ({ onFilterChange, onSearchChange, currentFilter }) => {
   return (
     <div className="search">
-      <div className="label-container">
-        <label htmlFor="searchfor">매물 검색<span className='blank'></span>|</label><span className='blank'></span>
-      </div>
       <div className='searchbox'>
         <Closer />
         <input 
           type="text" 
-          placeholder="주소를 검색해주세요" 
+          placeholder="Search by name or location" 
           onChange={(e) => onSearchChange(e.target.value)}
         />
       </div>
       <div className="house_type_buttons">
-        <span className='blank'></span>월세/전세<span className='blank'></span>|<span className='blank'></span>
+        
         <button 
           className={currentFilter === '월세' ? 'active' : ''} 
           onClick={() => onFilterChange('월세')}

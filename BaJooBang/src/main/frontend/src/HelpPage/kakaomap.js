@@ -242,9 +242,9 @@
        }
      }, [filteredPositions]);
  //-----------------------------------------------------------------------------------------------------------
- if (loading) {
-  return <Loading />; // 데이터 로딩 중일 때 로딩 컴포넌트 렌더링
-}
+//  if (loading) {
+//   return <Loading />; // 데이터 로딩 중일 때 로딩 컴포넌트 렌더링
+// }
      return (
        <div className="map_wrap">
          <div id="map"></div>

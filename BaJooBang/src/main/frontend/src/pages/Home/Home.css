@@ -1,18 +1,9 @@
 /* 전체 레이아웃 및 스타일 */
-body, html {
+.Homepage {
   margin: 0;
   padding: 0;
   font-family: 'Arial', sans-serif;
   background: #F3ECDC; /* 배경색을 연한 베이지 톤으로 설정 */
-}
-
-/* 헤더 스타일 */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 50px;
-  background-color: #F3ECDC; /* 헤더 배경색을 연한 베이지 톤으로 설정 */
 }
 
 .logo {
