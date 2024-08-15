@@ -1,129 +1,125 @@
-.MyPageBackground {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top:40px;
-    height: 700px;
-    background-color: white;
-}
-
-.MyPageBackground > * {
-    flex: 0 0 auto;
-}
-
-.MPName {
-    font-size: 25px;
-    color: black;
-}
-
-.MyBottom1,
-.MyBottom2 {
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8; /* This sets a base color for the entire page */
+  }
+  
+  .PageWrapper {
     width: 100%;
-    height: 220px;
-    padding-top: 38px;
-    padding-bottom:33px;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 0; /* Remove margin-top to eliminate gap */
-}
-
-.MyBottom1 {
-    background-color: rgba(162, 197, 121, 0.3);
-}
-
-.MyBottom2 {
-    background-color: #A2C579;
-}
-
-.Bottom {
+  }
+  
+  .HeaderBar {
+    background-color: #ffffff;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .HeaderBackground {
     width: 100%;
-    margin-top:100px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    height: 200px; /* Adjust this height to control the size of the colored section */
+    background: linear-gradient(to right, #344E41, #ddd); /* Gradient below the header */
+  }
+  
+  .MyPageContainer {
+    background-color: #ffffff;
+    width: 1000px;
+    height: 550px;
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     position: relative;
-}
-
-.ButtonGroup {
+    top: -90px; /* Move up to overlap with the colored background */
+  }
+  
+  .MainContent {
     display: flex;
-    flex-direction: row;
-    position: absolute;
-    bottom:235px;
-    top: -50px;  /* Adjust this value as needed */
-    left: 10px;  /* Adjust this value as needed */
-}
-
-.ToggleBottomButton {
-    margin-bottom: 56px;
-    margin-right: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 10px 10px 0px 0px;
-    background-color: rgba(162, 197, 121, 0.3);
-    color: black;
-    cursor: pointer;
-    box-shadow :3px  -2px 1px 0px rgb(193, 195, 193);
-    transition-duration:0.3s;
-}
-
-
-.ToggleBottomButton:active{
-    margin-left:5px;
-    margin-top:5px;
-    box-shadow: none;
-}
-
-.ToggleBottomButton.active-bottom1 {
-    background-color: rgba(162, 197, 121, 0.3); /* Active background color for 요청인 */
-    color: black; /* Active text color */
-}
-
-.ToggleBottomButton.active-bottom2 {
-    background-color: #A2C579; /* Active background color for 발품인 */
-    color: white; /* Active text color */
-}
-
-.ToggleBottomButton.inactive-bottom1 {
-    background-color: rgba(162, 197, 121, 0.3); /* Inactive background color for 발품인 when 요청인 is active */
-    color: black; /* Inactive text color */
-}
-
-.ToggleBottomButton.inactive-bottom2 {
-    background-color: #A2C579; /* Inactive background color for 요청인 when 발품인 is active */
-    color: white; /* Inactive text color */
-}
-
-.BottomBox {
+    align-items: flex-start;
+  }
+  
+  .ProfileSection {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin: 10px;
-}
-
-.LogoutButton {
+    margin-right: 20px;
+    margin-top: 150px;
+  }
+  
+  .ProfileIcon {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 20px;
+  }
+  
+  .ProfileDetails {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 15px;
-    width: 80px;
-    height: 30px;
+    flex-direction: column;
+    align-items: center; /* Centers text horizontally */
+  }
+  
+  .MPName {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .MPInfo, .MPAddress {
+    color: #777;
+    font-size: 14px;
+  }
+  
+  .ActivitySection {
+    flex: 2;
+    background-color: white;
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px solid #ddd;
+    margin-top: 60px;
+  }
+  
+  .RequestorActivity, .FootworkActivity {
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .ActivityBox {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .ActivityItem {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
     border-radius: 10px;
-    background-color: #F3F3F3;
-    font-weight: 500;
-    color: #5F5F5F;
-    position: absolute;
-    right: 30px;
-    top: 70px;
-    cursor: pointer;
-}
-
-.LogoutButton:hover {
-    background-color: #5F5F5F;
-    color: #F5F4F4;
-}
+    margin: 0 5px;
+  }
+  
+  .ActivityItem p {
+    margin: 0;
+  }
+  
+  .ViewMapLink {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    background-color: #d7e7cf;
+    color: #333;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+  }
+  
