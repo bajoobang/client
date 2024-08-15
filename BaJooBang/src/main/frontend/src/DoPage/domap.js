@@ -8,14 +8,11 @@ import Bell from '../HelpPage/bell';
 const SearchBar = ({ onSearchChange }) => {
   return (
     <div className="search">
-      <div className="label-container">
-        <label htmlFor="searchfor">매물 검색<span className='blank'></span>|</label><span className='blank'></span>
-      </div>
       <div className='searchbox'>
         <Closer />
         <input 
           type="text" 
-          placeholder="주소를 검색해주세요" 
+          placeholder="Search By Name or Location" 
           onChange={e => onSearchChange(e.target.value)} 
         />
       </div>
