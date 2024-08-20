@@ -7,6 +7,7 @@ import CheckText from '../../components/RequestForm/checkText';
 import WaterBox from '../../components/RequestForm/waterBox';
 import InputWaterBox from '../../components/RequestForm/inputWaterBox';
 import MoldBox from '../../components/RequestForm/moldBox';
+import ImputMoldBox from '../../components/RequestForm/inputMoldBox';
 import LightSelect from '../../components/RequestForm/lightSelect';
 import { ReactComponent as Water } from '../../components/images/water.svg';
 import { ReactComponent as Sun } from '../../components/images/sun.svg';
@@ -518,11 +519,11 @@ function RequestForm() {
                         </>
                         :
                         <>
-                            <MoldBox title={'거실'} complete={false} onChange={handleMoldStateChange} type="livingRoom" />
-                            <MoldBox title={'화장실'} complete={false} onChange={handleMoldStateChange} type="bathroom" />
-                            <MoldBox title={'베란다'} complete={false} onChange={handleMoldStateChange} type="balcony" />
-                            <MoldBox title={'신발장'} complete={false} onChange={handleMoldStateChange} type="shoeRack" />
-                            <MoldBox title={'창틀'} complete={false} onChange={handleMoldStateChange} type="windowFrame" />
+                            <ImputMoldBox title={'거실'} />
+                            <ImputMoldBox title={'화장실'} />
+                            <ImputMoldBox title={'베란다'} />
+                            <ImputMoldBox title={'신발장'} />
+                            <ImputMoldBox title={'창틀'} />
                         </>
                     }
 
