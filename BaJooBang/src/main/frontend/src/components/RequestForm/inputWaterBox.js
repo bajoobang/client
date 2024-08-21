@@ -1,0 +1,118 @@
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import './CircleSelector.css';
+import './waterBox.css';
+import { ReactComponent as Plus } from '../../components/images/plus_gray.svg';
+
+function WaterBox({ Icon, title, complete, savedState, onChange }) {
+    const [selected, setSelected] = useState(savedState?.selected || null);
+    const [hotWaterTime1, setHotWaterTime1] = useState(savedState?.hotWaterTime1 || '');
+    const [hotWaterTime2, setHotWaterTime2] = useState(savedState?.hotWaterTime2 || '');
+    const [image, setImage] = useState(null); // 업로드된 이미지 상태
+    const [isModalOpen, setIsModalOpen] = useState(false); // 모달창 상태
+
+    const prevSavedStateRef = useRef();
+
+    useEffect(() => {
+        if (prevSavedStateRef.current !== savedState && complete === true) {
+            setSelected(savedState?.selected || null);
+            setHotWaterTime1(savedState?.hotWaterTime1 || '');
+            setHotWaterTime2(savedState?.hotWaterTime2 || '');
+            prevSavedStateRef.current = savedState;
+        }
+    }, [savedState, complete]);
+
+    const handleTimeChange = useCallback((setter, value) => {
+        if (!complete) {
+            setter(value);
+            if (onChange) {
+                onChange({ selected, hotWaterTime1: setter === setHotWaterTime1 ? value : hotWaterTime1, hotWaterTime2: setter === setHotWaterTime2 ? value : hotWaterTime2 });
+            }
+        }
+    }, [complete, selected, hotWaterTime1, hotWaterTime2, onChange]);
+
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setImage(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen);
+    };
+
+    return (
+        <div className='waterBox'>
+            <div className='waterTitle'>
+                <Icon style={{ paddingRight: '0.3vw' }} />
+                {title}
+            </div>
+            <div className='waterContent'>
+                <div className='waterSmallTitle'>
+                    수압 정보
+                </div>
+                <div className="inputImageWater">
+                    {image ? (
+                        <img
+                            src={image}
+                            alt="Uploaded"
+                            className="wateruploadedImage"
+                            onClick={toggleModal} // 클릭하면 모달 창이 열림
+                        />
+                    ) : (
+                        <>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageUpload}
+                                id="imageUpload"
+                                style={{ display: 'none' }}
+                            />
+                            <label htmlFor="imageUpload" className="wateruploadLabel">
+                                <Plus style={{ marginRight: '5px' }} />
+                                <p style={{ color: '#A1A1A1', fontSize: '13px' }}>사진 업로드</p>
+                            </label>
+                        </>
+                    )}
+                </div>
+                <div className='waterSmallTitle'>
+                    온수 정보
+                </div>
+                <div className='waterTimeBox'>
+                    <p style={{ color: "#5F5F5F", paddingRight: '0.2vw' }}>1.</p>
+                    <input
+                        type='text'
+                        className='waterTextInput'
+                        placeholder={'00분 00초'}
+                        value={hotWaterTime1}
+                        onChange={e => handleTimeChange(setHotWaterTime1, e.target.value)}
+                        readOnly={complete}
+                    />
+                </div>
+                <div className='waterTimeBox'>
+                    <p style={{ color: "#5F5F5F", paddingRight: '0.2vw' }}>2.</p>
+                    <input
+                        type='text'
+                        className='waterTextInput'
+                        placeholder={'00분 00초'}
+                        value={hotWaterTime2}
+                        onChange={e => handleTimeChange(setHotWaterTime2, e.target.value)}
+                        readOnly={complete}
+                    />
+                </div>
+            </div>
+            {isModalOpen && (
+                <div className="watermodal" onClick={toggleModal}>
+                    <span className="close">&times;</span>
+                    <img className="watermodalContent" src={image} alt="Modal" />
+                </div>
+            )}
+        </div>
+    );
+}
+
+export default WaterBox;
