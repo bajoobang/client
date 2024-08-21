@@ -1,125 +1,104 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f8; /* This sets a base color for the entire page */
-  }
-  
-  .PageWrapper {
-    width: 100%;
-  }
-  
-  .HeaderBar {
-    background-color: #ffffff;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .HeaderBackground {
-    width: 100%;
-    height: 200px; /* Adjust this height to control the size of the colored section */
-    background: linear-gradient(to right, #344E41, #ddd); /* Gradient below the header */
-  }
-  
-  .MyPageContainer {
-    background-color: #ffffff;
-    width: 1000px;
-    height: 550px;
-    margin: 0 auto;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: relative;
-    top: -90px; /* Move up to overlap with the colored background */
-  }
-  
-  .MainContent {
-    display: flex;
-    align-items: flex-start;
-  }
-  
-  .ProfileSection {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-right: 20px;
-    margin-top: 150px;
-  }
-  
-  .ProfileIcon {
-    width: 70px;
-    height: 70px;
-    margin-bottom: 20px;
-  }
-  
-  .ProfileDetails {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centers text horizontally */
-  }
-  
-  .MPName {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .MPInfo, .MPAddress {
-    color: #777;
-    font-size: 14px;
-  }
-  
-  .ActivitySection {
-    flex: 2;
-    background-color: white;
-    padding: 20px;
-    border-radius: 15px;
-    border: 2px solid #ddd;
-    margin-top: 60px;
-  }
-  
-  .RequestorActivity, .FootworkActivity {
-    margin-bottom: 20px;
-  }
-  
-  h2 {
-    font-size: 18px;
-    margin-bottom: 15px;
-    color: #333;
-  }
-  
-  .ActivityBox {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  .ActivityItem {
-    flex: 1;
-    text-align: center;
-    padding: 10px;
-    background-color: #f1f1f1;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    margin: 0 5px;
-  }
-  
-  .ActivityItem p {
-    margin: 0;
-  }
-  
-  .ViewMapLink {
-    display: block;
-    text-align: center;
-    padding: 10px;
-    background-color: #d7e7cf;
-    color: #333;
-    text-decoration: none;
-    border-radius: 10px;
-    font-weight: bold;
-  }
-  
+.PageWrapper {
+  width: 100%;
+}
+
+.HeaderBackground {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(to right, #344E41, #ddd);
+}
+
+.MyPageContainer {
+  background-color: #ffffff;
+  width: 800px; /* 전체 너비 설정 */
+  margin: 0 auto;
+  padding: 20px; /* 패딩을 추가하여 내부 여백 설정 */
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  top: -60px; /* 상단 배경과의 겹침 조정 */
+}
+
+.MainContent {
+  display: flex;
+  flex-direction: row; /* 열 방향으로 배치 */
+  align-items: flex-start; /* 왼쪽 정렬 */
+}
+
+.ProfileSection {
+  text-align: center;
+  margin-right: 20px; /* 오른쪽 여백 추가 */
+  flex: 1; /* 프로필 섹션에 flex 비율 할당 */
+}
+
+.ProfileIcon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
+}
+
+.MPName {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.MPInfo, .MPAddress {
+  color: #777;
+  font-size: 14px;
+}
+
+.ActivitySection {
+  width: 100%;
+  padding: 15px;
+  border-radius: 15px 15px 0 0;
+  flex: 2; /* ActivitySection에 flex 비율 할당 */
+  margin-left: 20px; /* 왼쪽 여백 추가 */
+}
+
+.ActivityBox {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  border-radius: 15px 15px 0 0;
+  padding: 15px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+  border: style 10px;
+}
+
+.ActivityItem {
+  flex: 1;
+  text-align: center;
+  padding: 10px 0; /* 세로 패딩 추가 */
+  border-right: 1px solid #ddd; /* 오른쪽 경계선 추가 */
+}
+
+.ActivityItem:last-child {
+  border-right: none; /* 마지막 항목은 경계선 제거 */
+}
+
+.ActivityItem p {
+  margin: 0;
+}
+
+.ActivityItem p:first-child {
+  font-size: 14px; /* 텍스트 크기 조정 */
+  color: #777;
+}
+
+.ActivityItem p:last-child {
+  font-weight: bold;
+  font-size: 18px; /* 숫자 크기 조정 */
+}
+
+.ViewMapLink {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  background-color: #d7e7cf;
+  color: #333;
+  text-decoration: none;
+  border-radius: 0 0 15px 15px;
+  font-weight: bold;
+  margin-top: -5px; /* 박스와의 간격 제거 */
+}
