@@ -46,7 +46,7 @@ function MyPage() {
           
           <div className='ActivitySection'>
             <div className='RequestorActivity'>
-              <h2>나의 요청인 활동</h2>
+              <h3>나의 요청인 활동</h3><p></p>
               <div className='ActivityBox'>
                 <div className='ActivityItem'>
                   <p>찜한 방</p>
@@ -65,7 +65,8 @@ function MyPage() {
             </div>
 
             <div className='FootworkActivity'>
-              <h2>나의 발품인 활동</h2>
+              <p></p>
+              <h3>나의 발품인 활동</h3><p></p>
               <div className='ActivityBox'>
                 <div className='ActivityItem'>
                   <p>나의 별점</p>
