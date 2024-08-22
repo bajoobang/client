@@ -7,8 +7,9 @@ import CheckText from '../../components/RequestForm/checkText';
 import WaterBox from '../../components/RequestForm/waterBox';
 import InputWaterBox from '../../components/RequestForm/inputWaterBox';
 import MoldBox from '../../components/RequestForm/moldBox';
-import ImputMoldBox from '../../components/RequestForm/inputMoldBox';
+import InputMoldBox from '../../components/RequestForm/inputMoldBox';
 import LightSelect from '../../components/RequestForm/lightSelect';
+import InputLight from '../../components/RequestForm/inputLight';
 import { ReactComponent as Water } from '../../components/images/water.svg';
 import { ReactComponent as Sun } from '../../components/images/sun.svg';
 import { ReactComponent as Mold } from '../../components/images/mold.svg';
@@ -496,7 +497,7 @@ function RequestForm() {
                         complete ? 
                         <LightSelect complete={true} savedState={lightState} />
                         :
-                        <LightSelect complete={false} savedState={lightState} onChange={handleLightStateChange} />
+                        <InputLight />
                     }
 
                     
@@ -519,11 +520,11 @@ function RequestForm() {
                         </>
                         :
                         <>
-                            <ImputMoldBox title={'거실'} />
-                            <ImputMoldBox title={'화장실'} />
-                            <ImputMoldBox title={'베란다'} />
-                            <ImputMoldBox title={'신발장'} />
-                            <ImputMoldBox title={'창틀'} />
+                            <InputMoldBox title={'거실'} />
+                            <InputMoldBox title={'화장실'} />
+                            <InputMoldBox title={'베란다'} />
+                            <InputMoldBox title={'신발장'} />
+                            <InputMoldBox title={'창틀'} />
                         </>
                     }
 
