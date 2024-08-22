@@ -415,7 +415,20 @@ function RequestForm() {
     }, [write, request_id]);
     
     
-    
+    const [cancelReason, setCancelReason] = useState('');
+    const [isCancel, setIsCancel] = useState(false);
+    const [selectedOption, setSelectedOption] = useState(''); // 'confirm' 또는 'cancel' 값을 가질 수 있음
+
+    const handleConfirmClick = () => {
+        setSelectedOption('confirm');
+        setIsCancel(false); // 취소 선택 해제
+        
+    };
+
+    const handleCancelClick = () => {
+        setSelectedOption('cancel');
+        setIsCancel(true); // 취소 선택
+    };
     
     
 
@@ -662,7 +675,7 @@ function RequestForm() {
                         <div className='modal' onClick={closeModal}>
                             <div className='modal-content' onClick={(e) => e.stopPropagation()}>
                                 <span className='close' onClick={closeModal}>&times;</span>
-                                <p style={{fontSize: '25px', fontWeight: '500'}}>발품 평가</p>
+                                <p style={{fontSize: '25px', fontWeight: '500'}}>발품 평가 및 거래 확정</p>
                                 <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                                     <input 
                                         type='text' 
@@ -671,6 +684,43 @@ function RequestForm() {
                                         value={star}
                                         onChange={(e) => setStar(e.target.value)}
                                     />
+                                    <div className='eveluate-zone'>
+                                         <button 
+                                            onClick={handleConfirmClick} 
+                                            className='purchase-button'
+                                            style={{
+                                                backgroundColor: selectedOption === 'confirm' ? '#53A95D' : '', // 선택된 경우 색상 변경
+                                                color: selectedOption === 'confirm' ? 'white' : '#393939',
+                                            }}
+                                        >
+                                            구매 확정
+                                        </button>
+
+                                        {/* 구매 취소 버튼 */}
+                                        <button 
+                                            onClick={handleCancelClick} 
+                                            className='purchase-button'
+                                            style={{
+                                                backgroundColor: selectedOption === 'cancel' ? '#f44336' : '', // 선택된 경우 색상 변경
+                                                color: selectedOption === 'cancel' ? 'white' : '#393939',
+                                                
+                                            }}
+                                        >
+                                            구매 취소
+                                        </button>
+                                    </div>
+
+                                        {/* 구매 취소 사유 입력창 */}
+                                        {isCancel && (
+                                            <input 
+                                                type='text' 
+                                                placeholder='취소 사유를 입력해주세요.'
+                                                className='modal-input'
+                                                value={cancelReason}
+                                                onChange={(e) => setCancelReason(e.target.value)}
+                                            />
+                                        )}
+
                                     <button 
                                         onClick={() => { evaluatePatch(request_id, star); setEvaluate(true); closeModal(); navigate('/member'); }}
                                         className='modal-button'
