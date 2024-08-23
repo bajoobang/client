@@ -48,7 +48,7 @@ function MyPage() {
             <div className='RequestorActivity'>
               <h3>나의 요청인 활동</h3><p></p>
               <div className='ActivityBox'>
-                <div className='ActivityItem'>
+                <div className='ActivityItem' Link to>
                   <p>찜한 방</p>
                   <p>{listData.numOfLikes}개</p>
                 </div>
