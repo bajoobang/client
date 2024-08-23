@@ -1,5 +1,5 @@
 import React from 'react';
-import './ListPage1.css';
+import './ListBlock1.css'; // 별도의 CSS 파일로 스타일을 관리합니다.
 import { useNavigate } from 'react-router-dom';
 
 function ListBlock4({ Num, Address, Price, Date, Request_id, State }) {
@@ -21,18 +21,17 @@ function ListBlock4({ Num, Address, Price, Date, Request_id, State }) {
     };
 
     return (
-        <div className='ListTitle'>
-            <div className='ListTitleText2' style={{ fontWeight: 'bold' }}>{Num}</div>
-            <div className='ListTitleText2_address' style={{ width: '45%' }}>{Address}</div>
-            <div className='ListTitleText2' style={{ color: '#53C15F', fontWeight: '600' }}>{Price}</div>
-
-            <div className='ListTitleText2'>
-                <div style={{ fontWeight: '500', padding: '5px', borderRadius: '8px', display: 'flex', fontSize: '13.5px', justifyContent: 'center', alignItems: 'center', ...getStateStyle(State) }}>{State}</div>
+        <div onClick={() => navigate(`/request/${Request_id}`)} className='ListBlockContainer'>
+            <div className='ListBlockHeader'>
+                {Address}
             </div>
-            <div className='ListTitleText2'>
-                <div onClick={() => navigate(`/request/${Request_id}`)} className='list-request-box'>요청서 보기</div>
-            </div>
-            <div className='ListTitleText2' style={{ color: '#69666E', fontWeight: '400' }}>{Date}</div>
+            <div className='ListBlockBody'>
+                <div>가격: {Price}</div><p></p>
+                <div>등록일: {Date}</div><p></p>
+                <div style={{ padding: '5px', borderRadius: '8px', fontSize: '13.5px', ...getStateStyle(State), textAlign:'center' } }>
+                    {State}
+                </div>
+                            </div>
         </div>
     );
 }

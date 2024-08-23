@@ -1,22 +1,24 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './ListBlock1.css';
+import './ListBlock1.css'; // 별도의 CSS 파일로 스타일을 관리합니다.
 
 function ListBlock5({ Num, Address, Month, house_id }) {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        console.log('house_id : '+house_id);
+        console.log('house_id : ' + house_id);
         navigate(`/helpinfo/${house_id}`);
     };
 
     return (
-        <div className='ListTitle'>
-            <div className='ListTitleText_num' style={{fontWeight: 'bold'}}>{Num}</div>
-            <div className='ListTitleText_address'>{Address}</div>
-            <div className='ListTitleText_person' style={{color: '#53C15F', fontWeight: '600'}}>{Month}</div>
-            <div className='ListTitleText_star'>
-                <div className='list-request-box' onClick={handleClick}>매물 보기</div>
+        <div onClick={handleClick}  className='ListBlockContainer'>
+            <div className='ListBlockHeader'>
+                {Address}
+            </div>
+            <div className='ListBlockBody'>
+                <div>월세: {Month}</div><p></p>
+                <div>중개인: </div><p></p>
+                <div>중개사 위치: </div><p></p>
             </div>
         </div>
     );

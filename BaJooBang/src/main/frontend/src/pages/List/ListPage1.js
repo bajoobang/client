@@ -10,13 +10,29 @@ function ListPage1() {
     const [currentPage, setCurrentPage] = useState(1);
     const [currentItems, setCurrentItems] = useState([]);
     const [listData, setListData] = useState([]);
-    const itemsPerPage = 10;
+    const itemsPerPage = 6; // 한 페이지당 6개의 박스를 표시하도록 설정
 
     useEffect(() => {
-        // Fetch data from the API
+        // 더미 데이터 정의
+        const dummyData = [
+            { Num: 1, Address: '동대문구 휘경동', Person: '김철수', Star: 4.8 },
+            { Num: 2, Address: '중구 광희동1가 145-2', Person: '김철수', Star: 4.8 },
+            { Num: 3, Address: '서울특별시 관악구 신림동', Person: '김철수', Star: 4.8 },
+            { Num: 4, Address: '서울특별시 서초구 서초동', Person: '김철수', Star: 4.8 },
+            { Num: 5, Address: '서울특별시 서초구 서초동', Person: '김철수', Star: 4.8 },
+            { Num: 6, Address: '서울특별시 서초구 서초동', Person: '김철수', Star: 4.8 },
+            { Num: 7, Address: '서울특별시 서초구 서초동', Person: '김철수', Star: 4.8 },
+            { Num: 8, Address: '서울특별시 서초구 서초동', Person: '김철수', Star: 4.8 },
+            { Num: 9, Address: '서울특별시 서초구 서초동', Person: '김철수', Star: 4.8 },
+            { Num: 10, Address: '서울특별시 서초구 서초동', Person: '김철수', Star: 4.8 },
+            { Num: 11, Address: '서울특별시 서초구 서초동', Person: '김철수', Star: 4.8 },
+            { Num: 12, Address: '서울특별시 서초구 서초동', Person: '김철수', Star: 4.8 },
+        ];
+
+        // API에서 데이터 가져오기
         const fetchData = async () => {
             try {
-                const response = await axios.get('/member/inquiry'); // Replace with your actual API endpoint
+                const response = await axios.get('/member/inquiry'); // 실제 API 엔드포인트로 대체
                 const requestData = response.data.map((item, index) => ({
                     Num: index + 1,
                     Address: item.address,
@@ -26,9 +42,10 @@ function ListPage1() {
                     Worker_id: item.worker_id,
                     Request_id: item.request_id,
                 }));
-                setListData(requestData);
+                setListData(requestData.length > 0 ? requestData : dummyData); // 실제 데이터가 있으면 사용하고, 없으면 더미 데이터 사용
             } catch (error) {
-                console.error('Error fetching data:', error);
+                console.error('데이터를 가져오는 중 오류 발생:', error);
+                setListData(dummyData); // 오류가 발생하면 더미 데이터 사용
             }
         };
 
@@ -45,14 +62,14 @@ function ListPage1() {
         setModalData(null);
     };
 
-    // Update current items when currentPage changes
+    // currentPage가 변경될 때 currentItems 업데이트
     useEffect(() => {
         const indexOfLastItem = currentPage * itemsPerPage;
         const indexOfFirstItem = indexOfLastItem - itemsPerPage;
         setCurrentItems(listData.slice(indexOfFirstItem, indexOfLastItem));
     }, [currentPage, listData]);
 
-    // Change page
+    // 페이지 변경
     const paginate = (pageNumber, event) => {
         event.preventDefault();
         setCurrentPage(pageNumber);
@@ -65,13 +82,7 @@ function ListPage1() {
 
     return(
         <div className='ListBackground'>
-            <div className='ListBox'>
-                <div className='ListTitle' style={{backgroundColor: 'rgba(162, 197, 121, 0.3)'}}>
-                   <div className='ListTitleText_num' style={{fontWeight: '600'}}>번호</div> 
-                   <div className='ListTitleText_address' style={{fontWeight: '600'}}>주소</div>
-                   <div className='ListTitleText_person' style={{fontWeight: '600'}}>발품인</div>
-                   <div className='ListTitleText_star' style={{fontWeight: '600'}}>별점</div>
-                </div>
+            <div className='ListGrid'> {/* 그리드 레이아웃으로 변경 */}
                 {currentItems.map((item, index) => (
                     <React.Fragment key={index}>
                         <ListBlock 
@@ -81,7 +92,6 @@ function ListPage1() {
                             Star={item.Star} 
                             onClick={() => handleBlockClick(item)}
                         />
-                        <div className='ListLine' />
                     </React.Fragment>
                 ))}
             </div>
