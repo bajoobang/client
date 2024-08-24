@@ -31,7 +31,7 @@ function MyPage() {
   return (
     <div className="PageWrapper">
       
-      <div className="HeaderBackground"></div>  {/* This is the section with the background color/gradient */}
+      <div className="HeaderBackground"></div> 
       
       <div className="MyPageContainer">
         <div className="MainContent">
@@ -61,7 +61,7 @@ function MyPage() {
                   <p>{listData.numOfInquiries}건</p>
                 </NavLink>
               </div>
-              <NavLink to='/member/registered' className='ViewMapLink'>매물 지도 보러가기</NavLink>
+              <NavLink to='/helpmap' className='ViewMapLink'>매물 지도 보러가기</NavLink>
             </div>
 
             <div className='FootworkActivity'>
@@ -80,7 +80,7 @@ function MyPage() {
                   <p>{listData.numOfAlarms}건</p>
                 </NavLink>
               </div>
-              <NavLink to='/member/footwork' className='ViewMapLink'>발품 지도 보러가기</NavLink>
+              <NavLink to='/domap' className='ViewMapLink'>발품 지도 보러가기</NavLink>
             </div>
           </div>
         </div>

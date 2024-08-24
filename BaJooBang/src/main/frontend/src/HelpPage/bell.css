@@ -22,10 +22,6 @@
   transition: transform 0.3s ease; 
 }
 
-.slide-left {
-  transform: translateX(-80px); 
-}
-
 .notification-tooltip {
   position: absolute;
   top: 0;

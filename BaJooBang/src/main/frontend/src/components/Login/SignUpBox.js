@@ -6,6 +6,7 @@ import Input from './Input';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import houseImage from '../images/login_house.svg'; // Import the SVG image
 
 function SignUpBox() {
     const navigate = useNavigate();
@@ -13,6 +14,7 @@ function SignUpBox() {
     const [email, setEmail] = useState('');
     const [pw, setPw] = useState('');
     const [address, setAddress] = useState('');
+    
 
     const handleLoginClick = () => {
         navigate('/login');
@@ -42,20 +44,21 @@ function SignUpBox() {
     }
 
     return (
-        <div className='box'>
-            <div className='leftBox' style={{ backgroundColor: '#61AF77' }}>
-                <LoginLeft />
+        <div className='container'>
+            <div className='imageBox'>
+                <img src={houseImage} alt="House" className='houseImage' />
             </div>
+        <div className='box'>
             <div className='rightBox'>
-                <p className='title'>Sign Up</p>
+                <p className='title'>WELCOME!</p>
                 <Input isPrivate={false} title={"Name"} placeholder={'Name'} onChange={(e) => setName(e.target.value)} />
                 <Input isPrivate={false} title={"Email Address"} placeholder={'Email Address'} onChange={(e) => setEmail(e.target.value)} />
                 <Input isPrivate={true} title={"Password"} placeholder={'Password'} onChange={(e) => setPw(e.target.value)} />
                 <Input isPrivate={false} title={"Location Address"} placeholder={'Location Address'} onChange={(e) => setAddress(e.target.value)} />
-                <button className='button' style={{ backgroundColor: '#377D3E' }} onClick={SignUpPost}>Sign up</button>
-                <div className='line' />
-                <button className='bottomButton' onClick={handleLoginClick}>Log in</button>
+                <button className='button' onClick={SignUpPost}>Sign Up</button>
+                    <p className='loginText' onClick={handleLoginClick}>Log In</p>
             </div>
+        </div>
         </div>
     );
 }
