@@ -14,6 +14,7 @@ function SignUpBox() {
     const [email, setEmail] = useState('');
     const [pw, setPw] = useState('');
     const [address, setAddress] = useState('');
+    const [account, setAccount] = useState('');
     
 
     const handleLoginClick = () => {
@@ -26,6 +27,7 @@ function SignUpBox() {
             email: email,
             pw: pw,
             address: address,
+            account : account
         };
         try {
             console.log(name);
@@ -44,7 +46,7 @@ function SignUpBox() {
     }
 
     return (
-        <div className='container'>
+        <div className='container1'>
             <div className='imageBox'>
                 <img src={houseImage} alt="House" className='houseImage' />
             </div>
@@ -55,6 +57,7 @@ function SignUpBox() {
                 <Input isPrivate={false} title={"Email Address"} placeholder={'Email Address'} onChange={(e) => setEmail(e.target.value)} />
                 <Input isPrivate={true} title={"Password"} placeholder={'Password'} onChange={(e) => setPw(e.target.value)} />
                 <Input isPrivate={false} title={"Location Address"} placeholder={'Location Address'} onChange={(e) => setAddress(e.target.value)} />
+                <Input isPrivate={true} title={"Account Number"} placeholder={'Account Number'} onChange={(e) => setAccount(e.target.value)} />
                 <button className='button' onClick={SignUpPost}>Sign Up</button>
                     <p className='loginText' onClick={handleLoginClick}>Log In</p>
             </div>

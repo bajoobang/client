@@ -1,6 +1,7 @@
 .background{
     background-color: #F3ECDC;
-}.container {
+}
+.container1 {
     display: flex; /* 플렉스 컨테이너로 설정하여 자식 요소를 가로로 배치 */
     justify-content: center; /* 컨테이너 안에서 중앙 정렬 */
     align-items: center; /* 세로로 중앙 정렬 */
@@ -9,7 +10,6 @@
     flex-direction: columns;
     gap: 30px; /* 이미지와 박스 사이의 간격 조정 */
 }
-
 .imageBox {
     display: flex;
     justify-content: center;

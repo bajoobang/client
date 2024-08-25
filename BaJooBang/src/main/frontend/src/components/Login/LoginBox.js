@@ -42,7 +42,7 @@ function LoginBox() {
     }
 
     return (
-        <div className='container'>
+        <div  className='container1' >
             <div className='imageBox'>
                 <img src={houseImage} alt="House" className='houseImage' />
             </div>
