@@ -27,11 +27,11 @@ function RequestForm() {
     let house_id = null;
     let request_id = null;
 
-    if (id.startsWith('a')) {
-        house_id = id.substring(1);
-    } else {
-        request_id = id;
-    }
+    // if (id.startsWith('a')) {
+    //     house_id = id.substring(1);
+    // } else {
+    //     request_id = id;
+    // }
 
     //console.log("Location state:", location.state);
 
@@ -60,8 +60,8 @@ function RequestForm() {
     const [price, setPrice] = useState('');
     const [date, setDate] = useState('');
     const [write, setWrite] = useState(isFromInformation); // Set write based on navigation source
-    const [apply, setApply] = useState(false); // 발품인이 신청했는지에 대한 상태
-    const [complete, setComplete] = useState(false); // 발품인이 발품서를 작성했는지에 대한 상태
+    const [apply, setApply] = useState(true); // 발품인이 신청했는지에 대한 상태
+    const [complete, setComplete] = useState(true); // 발품인이 발품서를 작성했는지에 대한 상태
     const [evaluate, setEvaluate] = useState(false); // 요청인이 발품인을 평가했는지에 대한 상태
 
     const [requests, setRequests] = useState([]);
@@ -239,6 +239,21 @@ function RequestForm() {
         } catch (error) {
             toast.error('발품인 평가를 실패하였습니다. 다시 시도해주세요');
             console.error('Error fetching data:', error);
+        }
+    };
+
+    // 취소 사유 전송 함수
+    const sendCancelReason = async (request_id, cancelReason) => {
+        try {
+            const response = await axios.post(`/refund`, {
+                request_id: request_id,
+                reasonForReFund: cancelReason,
+            });
+            toast.success('구매 취소가 완료되었습니다.');
+            console.log('Cancel Response:', response);
+        } catch (error) {
+            toast.error('구매 취소에 실패하였습니다. 다시 시도해주세요');
+            console.error('Error sending cancel reason:', error);
         }
     };
 
@@ -430,7 +445,20 @@ function RequestForm() {
         setIsCancel(true); // 취소 선택
     };
     
-    
+    const handleEvaluateClick = async () => {
+        // 평가 요청은 항상 실행
+        await evaluatePatch(request_id, star);
+
+        // 구매 취소가 선택된 경우, 추가적으로 취소 사유를 전송
+        if (isCancel) {
+            await sendCancelReason(request_id, cancelReason);
+        }
+
+        setEvaluate(true);
+        closeModal();
+        navigate('/member');
+    };
+
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '5vw', paddingBottom: '5vw', backgroundColor: '#ffffdd' }}>
@@ -721,11 +749,10 @@ function RequestForm() {
                                             />
                                         )}
 
-                                    <button 
-                                        onClick={() => { evaluatePatch(request_id, star); setEvaluate(true); closeModal(); navigate('/member'); }}
+                                    <button
+                                        onClick={handleEvaluateClick}
                                         className='modal-button'
                                     >
-
                                         평가 완료
                                     </button>
                                 </div>
