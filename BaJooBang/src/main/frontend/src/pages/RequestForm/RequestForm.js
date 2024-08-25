@@ -27,13 +27,13 @@ function RequestForm() {
     let house_id = null;
     let request_id = null;
 
-    // if (id.startsWith('a')) {
-    //     house_id = id.substring(1);
-    // } else {
-    //     request_id = id;
-    // }
+    if (id.startsWith('a')) {
+        house_id = id.substring(1);
+    } else {
+        request_id = id;
+    }
 
-    //console.log("Location state:", location.state);
+    console.log("Location state:", location.state);
 
     const content = location.state ? location.state.content : '기본값';
 
@@ -278,6 +278,10 @@ function RequestForm() {
                 }
             });
             console.log('Request success:', response.data);
+
+            const kakaoUrl = response.data;
+            window.location.href = kakaoUrl;
+
             toast.success('발품을 성공적으로 등록하였습니다.');
             navigate('/domap');
         } catch (error) {
