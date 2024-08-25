@@ -15,6 +15,11 @@ function ListBlock2({Num, Address, Price, State, Request_id, Date}) {
                 return { color: '#3888FF', backgroundColor: '#E5F0FF' };
             case '평가 완료':
                 return { color : '#7B78FF', backgroundColor: '#EDEAFF' };
+            case '환불 중':
+                return { color : '#31A82F', backgroundColor: '#DAFCDD' };
+            case '환불 완료':
+                return { color : '#FFA800', backgroundColor: '#FFE9B7' };
+
             default:
                 return { color: 'black', backgroundColor: 'transparent' };
         }
