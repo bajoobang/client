@@ -40,7 +40,9 @@ function ListBlock2({ Num, Address, Price, State, Request_id, Date }) {
         <div className='ListBlockContainer'>
             <div className='ListBlockHeader'>
                 {Address}
-                <button className='cancel-button' onClick={handleCancel}>구매 취소</button>
+                {(State !== '작성 완료' && State !== '평가 완료') && (
+                    <button className='cancel-button' onClick={handleCancel}>구매 취소</button>
+                )}
             </div>
             <div className='ListBlockBody'>
                 <div>가격 : {Price}</div><p></p>
