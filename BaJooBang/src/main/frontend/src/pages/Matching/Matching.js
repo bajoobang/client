@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Matching.css';
-import {ReactComponent as Profile1} from '../../components/images/mp_profile.svg';
-import {ReactComponent as Profile2} from '../../components/images/profile2.svg';
+import { ReactComponent as ProfileIcon } from '../../components/images/mp_profile.svg'; // Assuming you have the SVG in this path
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -14,7 +13,6 @@ function Matching() {
     const Request_id = location.state ? location.state.Request_id : null;
 
     useEffect(() => {
-        // Set the API endpoint based on the referring page
         if (location.state && location.state.fromPage === 'ListPage2') {
             setApiEndpoint('/member/registered/matching');
         } else if (location.state && location.state.fromPage === 'ListPage4') {
@@ -23,19 +21,18 @@ function Matching() {
     }, [location]);
 
     useEffect(() => {
-        // Fetch data from the API
         const fetchData = async () => {
-            console.log('request_id : ' + Request_id)
+            console.log('request_id : ' + Request_id);
             try {
                 if (apiEndpoint) {
                     const response = await axios.get(apiEndpoint, {
                         headers: {
                             'request_id': Request_id
                         }
-                    }); // Replace with your actual API endpoint
+                    });
                     
                     setData(response.data);
-                    console.log('매칭데이터 : ', response.data); // 콘솔 로그 수정
+                    console.log('매칭데이터 : ', response.data);
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -45,47 +42,44 @@ function Matching() {
         if (Request_id && apiEndpoint) {
             fetchData();
         }
-    }, [Request_id, apiEndpoint]); // 종속성 배열에서 data 제거
-    
-    
-    return(
-        <div style={{display: 'flex', flexDirection:'column', justifyContent: 'center', alignItems: 'center' }}>
-            <div style={{width: "70vw", display: 'flex', flexDirection:'row', padding: '10vw', justifyContent: 'center', alignItems: 'center'}}>
-                <div className='MatchingPerson'>
-                        <p style={{fontWeight:"500", marginTop: "10px"}}>요청인</p>
-                        <Profile1/>
-                        <p style={{fontSize: "25px", fontWeight: "500"}}>{data?.requester}</p>
-                </div>
-                <div className='MatchingContent'>
-                    <div className='MatchingContentLeft'>
-                        <p>거래 가격</p>
-                        <p>발품 일시</p>
-                    </div>
-                    <div>
-                        <div style={{margin: "17px"}} className='MatchingPartition'/>
-                        <div style={{margin: "17px"}} className='MatchingPartition'/>
-                        <div style={{margin: "17px"}} className='MatchingPartition'/>
-                    </div>
-                    <div className='MatchingContentLeft'>
-                        <p>{data?.price}</p>
-                        <p>{data?.date}</p>
-                    </div>
+    }, [Request_id, apiEndpoint]);
+
+    return (
+        <div className="matching-container">
+            <div className="profile-section">
+                <div className="profile-card">
+                    <p className='profile-title'> 매칭 상대</p>
+                    <ProfileIcon className="profile-icon"/>
                     
+                    <p className="profile-name">{data?.worker || '홍길동'}</p>
+                    <p className="profile-rating">⭐ {data?.rating || '4.2'}</p>
                 </div>
-                <div className='MatchingPerson'>
-                        <p style={{fontWeight:"500", marginTop: "10px"}}>발품인</p>
-                        <Profile2/>
-                        <p style={{fontSize: "25px", fontWeight: "500"}}>{data?.worker}</p>
+            </div>
+            <div className='right'>
+            <div className="info-section">
+                <div className="info-item">
+                    <p>거래 가격</p>
+                    <p>|</p>
+                    <p>{data?.price || '15,000원'}</p>
                 </div>
-                
+                <p></p>
+                <div className="info-item">
+                    <p>발품 일시</p>
+                    <p>|</p>
+                    <p>{data?.date || '2024년 3월 31일'}</p>
+                </div>
+                <p></p>
+                <div className="info-item">
+                    <p>거래 마감 기한</p>
+                    <p>|</p>
+                    <p>{data?.deadline || '2024년 4월 2일'}</p>
+                </div>
             </div>
-            <div style={{width: "30vw", justifyContent: 'space-between', display: 'flex', flexDirection: 'row', margin: '-5vw'}}>
-                <div onClick={() => navigate(`/request/${Request_id}`)} className='MatchingDocument'>발품서</div>
-            </div>
-            
+            <div className="button-section">
+                <button className="action-button" onClick={() => navigate(`/request/${Request_id}`)}>요청서</button>
+            </div></div>
         </div>
-        
-    )
+    );
 }
 
 export default Matching;

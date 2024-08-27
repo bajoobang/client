@@ -11,7 +11,12 @@
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
     overflow: hidden;
 }
-
+.cancel-button{
+    margin-left: 20px;
+    border-radius: 10px;
+    border: solid gray 1px;
+    background-color: #F3ECDC;
+}
 .ListBlockHeader {
     width: 100%;
     background-color: #e3e8d3; /* 상단 배경 색상 */

@@ -45,7 +45,7 @@ function Modal({ isOpen, onClose, data, Worker_id, Request_id }) {
                         </div>
                         <div 
                         className='modalButton' 
-                        style={{ backgroundColor: 'rgba(210, 222, 50, 0.4)' }} 
+                        style={{ backgroundColor: '#A3B18A '}} 
                         onClick={() => { 
                             fetchData(); // 데이터를 가져오는 함수 호출
                             navigate('/member'); // 이동할 경로를 지정

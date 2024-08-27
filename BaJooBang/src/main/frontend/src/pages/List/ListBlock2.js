@@ -1,8 +1,9 @@
 import React from 'react';
 import './ListBlock1.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Add this line to use axios for API calls
 
-function ListBlock2({Num, Address, Price, State, Request_id, Date}) {
+function ListBlock2({ Num, Address, Price, State, Request_id, Date }) {
     const navigate = useNavigate();
     
     const getStateStyle = (state) => {
@@ -19,16 +20,27 @@ function ListBlock2({Num, Address, Price, State, Request_id, Date}) {
                 return { color : '#31A82F', backgroundColor: '#DAFCDD' };
             case '환불 완료':
                 return { color : '#FFA800', backgroundColor: '#FFE9B7' };
-
             default:
                 return { color: 'black', backgroundColor: 'transparent' };
         }
     };
 
+    const handleCancel = async () => {
+        try {
+            await axios.delete(`/withdraw`, { data: { request_id: Request_id } });
+            alert('구매가 취소되었습니다.');
+            // Optionally, refresh the list or update the state to reflect the cancellation
+        } catch (error) {
+            console.error('구매 취소 중 오류 발생:', error);
+            alert('구매 취소에 실패했습니다.');
+        }
+    };
+
     return(
-        <div className='ListBlockContainer' onClick={() => navigate(`/request/${Request_id}`)}>
+        <div className='ListBlockContainer'>
             <div className='ListBlockHeader'>
                 {Address}
+                <button className='cancel-button' onClick={handleCancel}>구매 취소</button>
             </div>
             <div className='ListBlockBody'>
                 <div>가격 : {Price}</div><p></p>
@@ -37,7 +49,6 @@ function ListBlock2({Num, Address, Price, State, Request_id, Date}) {
                 <div style={{ padding: '5px', borderRadius: '8px', fontSize: '13.5px', ...getStateStyle(State), textAlign:'center' }}>
                     {State}
                 </div>
-                
             </div>
         </div>
     );
