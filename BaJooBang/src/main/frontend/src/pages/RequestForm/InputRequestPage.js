@@ -36,7 +36,7 @@ function RequestForm() {
     //     request_id = id;
     // }
 
-    //console.log("Location state:", location.state);
+    // console.log("Location state:", location.state);
 
     const content = location.state ? location.state.content : '기본값';
 
@@ -418,8 +418,49 @@ function RequestForm() {
     }, [write, request_id]);
     
     
+    // 이미지 상태 관리
+    const [waterImages, setWaterImages] = useState([]); // 수압 이미지 상태
+    const [lightImage, setLightImage] = useState(null); // 채광 이미지 상태
+    const [moldImages, setMoldImages] = useState([]); // 곰팡이 이미지 상태
+
+    // 이미지 변경 핸들러
+    const handleWaterImageChange = (images) => {
+        setWaterImages(images);
+    };
+
+    const handleLightImageChange = (image) => {
+        setLightImage(image);
+    };
+
+    const handleMoldImageChange = (images) => {
+        setMoldImages(images);
+    };
     
-    
+    const handleSubmit = async () => {
+        const formData = new FormData();
+        const images = [...waterImages, lightImage, ...moldImages]; // 모든 이미지를 하나의 배열로 결합
+        const imageCounts = [waterImages.length, lightImage ? 1 : 0, moldImages.length]; // 이미지 개수 배열
+
+        images.forEach((image, index) => {
+            if (image) {
+                formData.append('images', image);
+            }
+        });
+
+        formData.append('imageCounts', JSON.stringify(imageCounts));
+
+        try {
+            // 서버에 formData 전송
+            const response = await axios.patch(`/balpoom-form`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            console.log(response.data); // 서버 응답 처리
+        } catch (error) {
+            console.error('이미지 업로드 중 오류 발생:', error);
+        }
+    };
     
 
     return (
@@ -470,6 +511,7 @@ function RequestForm() {
                             complete={complete} 
                             savedState={waterState.sink} 
                             onChange={(state) => handleWaterStateChange('sink', state)} 
+                            onImageChange={handleWaterImageChange}
                         />
                         <InputWaterBox 
                             Icon={Sink2} 
@@ -477,6 +519,7 @@ function RequestForm() {
                             complete={complete} 
                             savedState={waterState.basin} 
                             onChange={(state) => handleWaterStateChange('basin', state)} 
+                            onImageChange={handleWaterImageChange}
                         />
                         <InputWaterBox 
                             Icon={Shower} 
@@ -484,6 +527,7 @@ function RequestForm() {
                             complete={complete} 
                             savedState={waterState.shower} 
                             onChange={(state) => handleWaterStateChange('shower', state)} 
+                            onImageChange={handleWaterImageChange}
                         />
                     </div>
                 </div>
@@ -497,7 +541,7 @@ function RequestForm() {
                         complete ? 
                         <LightSelect complete={true} savedState={lightState} />
                         :
-                        <InputLight />
+                        <InputLight onImageChange={handleLightImageChange} />
                     }
 
                     
@@ -520,11 +564,11 @@ function RequestForm() {
                         </>
                         :
                         <>
-                            <InputMoldBox title={'거실'} />
-                            <InputMoldBox title={'화장실'} />
-                            <InputMoldBox title={'베란다'} />
-                            <InputMoldBox title={'신발장'} />
-                            <InputMoldBox title={'창틀'} />
+                            <InputMoldBox title={'거실'} onImageChange={handleMoldImageChange} />
+                            <InputMoldBox title={'화장실'} onImageChange={handleMoldImageChange} />
+                            <InputMoldBox title={'베란다'} onImageChange={handleMoldImageChange} />
+                            <InputMoldBox title={'신발장'} onImageChange={handleMoldImageChange} />
+                            <InputMoldBox title={'창틀'} onImageChange={handleMoldImageChange} />
                         </>
                     }
 
@@ -624,7 +668,7 @@ function RequestForm() {
                 <div style={{ width: '100%', display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
                     {write ? (
                         <div onClick={ WritePost} style={{ width: '9vw', height: '3.7vw', backgroundColor: '#E9EBEF', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <p style={{ fontSize: '1vw', color: '#5F5F5F', marginLeft: '0.3vw' }}>발품 등록</p>
+                            <p style={{ fontSize: '1vw', color: '#5F5F5F', marginLeft: '0.3vw' }}>등록 및 결제</p>
                         </div>
                     ) : (
                         apply ? (
@@ -640,7 +684,7 @@ function RequestForm() {
                                 )
                             )
                             :
-                            <div onClick={CompletePost} style={{ width: '9vw', height: '3.7vw', backgroundColor: '#E9EBEF', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <div onClick={handleSubmit} style={{ width: '9vw', height: '3.7vw', backgroundColor: '#E9EBEF', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <Check />
                                 <p style={{ fontSize: '1vw', color: '#5F5F5F', marginLeft: '0.3vw' }}>발품 작성</p>
                             </div>
@@ -684,6 +728,9 @@ function RequestForm() {
                                 </div>
                             </div>
                         </div>
+
+
+                        
                     ) : (
                         <div className='modal' onClick={closeModal}>
                             <div className='modal-content' onClick={(e) => e.stopPropagation()}>

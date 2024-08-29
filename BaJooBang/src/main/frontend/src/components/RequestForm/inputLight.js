@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './inputLight.css';
 import { ReactComponent as Plus } from '../../components/images/plus_gray.svg';
 
-function InputLight() {
+function InputLight(onImageChange) {
     const [image, setImage] = useState(null); // 업로드된 이미지 상태
     const [isModalOpen, setIsModalOpen] = useState(false); // 모달창 상태
     const [inputId, setInputId] = useState(''); // 고유한 input id
@@ -17,7 +17,9 @@ function InputLight() {
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
-                setImage(reader.result);
+                const result = reader.result;
+                setImage(result);
+                if (onImageChange) onImageChange(result);
             };
             reader.readAsDataURL(file);
         }
