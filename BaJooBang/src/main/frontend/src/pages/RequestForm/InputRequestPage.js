@@ -265,9 +265,12 @@ function RequestForm() {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            console.log('Request success:', response.data);
+            
+            const kakaoUrl = response.data;
+            window.open(kakaoUrl, "_blank", "noopener, noreferrer");
+
             toast.success('발품을 성공적으로 등록하였습니다.');
-            navigate('/domap');
+            navigate('/mypage');
         } catch (error) {
             console.error('Register failed:', error);
             toast.error('발품 등록을 실패하였습니다.');
