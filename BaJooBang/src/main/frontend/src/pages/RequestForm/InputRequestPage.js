@@ -441,23 +441,30 @@ function RequestForm() {
     
     const handleSubmit = async () => {
         const formData = new FormData();
-
-        waterImages.forEach((image, index) => {
-            if(image) {
-                formData.append('waterImages', image)
-            }
-        })
-        lightImage.forEach((image, index) => {
-            if(image) {
-                formData.append('ligntImages', image)
-            }
-        })
-        moldImages.forEach((image, index) => {
-            if(image) {
-                formData.append('moldImages', image)
-            }
-        })
-
+    
+        // waterImages가 배열인지 확인
+        if (Array.isArray(waterImages)) {
+            waterImages.forEach((image, index) => {
+                if (image) {
+                    formData.append('waterImages', image);
+                }
+            });
+        }
+    
+        // lightImage는 단일 이미지이므로 forEach를 사용하지 않습니다.
+        if (lightImage) {
+            formData.append('lightImages', lightImage);
+        }
+    
+        // moldImages가 배열인지 확인
+        if (Array.isArray(moldImages)) {
+            moldImages.forEach((image, index) => {
+                if (image) {
+                    formData.append('moldImages', image);
+                }
+            });
+        }
+    
         try {
             // 서버에 formData 전송
             const response = await axios.patch(`/balpoom-form`, formData, {
@@ -465,11 +472,13 @@ function RequestForm() {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            console.log(response.data); // 서버 응답 처리
+            console.log(response.data);
         } catch (error) {
             console.error('이미지 업로드 중 오류 발생:', error);
         }
     };
+    
+    
     
 
     return (
