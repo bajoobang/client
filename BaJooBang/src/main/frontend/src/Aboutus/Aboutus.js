@@ -14,7 +14,7 @@ const teamMembers = [
 
 export default function About() {
   return (
-    <div className="container">
+    <div className="container3">
       <div className="team-section">
         <div className="team-row"> <div className="role-label">Frontend</div>
           {teamMembers.filter(member => member.role === 'Frontend').map((member, index) => (
