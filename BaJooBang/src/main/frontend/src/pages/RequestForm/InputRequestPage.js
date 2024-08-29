@@ -30,11 +30,11 @@ function RequestForm() {
     let house_id = null;
     let request_id = null;
 
-    // if (id.startsWith('a')) {
-    //     house_id = id.substring(1);
-    // } else {
-    //     request_id = id;
-    // }
+    if (id.startsWith('a')) {
+        house_id = id.substring(1);
+    } else {
+        request_id = id;
+    }
 
     // console.log("Location state:", location.state);
 
