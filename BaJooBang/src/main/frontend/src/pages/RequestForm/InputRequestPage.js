@@ -442,27 +442,48 @@ function RequestForm() {
     const handleSubmit = async () => {
         const formData = new FormData();
     
-        // waterImages가 배열인지 확인
-        if (Array.isArray(waterImages)) {
-            waterImages.forEach((image, index) => {
-                if (image) {
-                    formData.append('waterImages', image);
+        
+                if (waterImages) {
+                    formData.append('waterImages', waterImages);
                 }
-            });
-        }
+            
     
         // lightImage는 단일 이미지이므로 forEach를 사용하지 않습니다.
         if (lightImage) {
             formData.append('lightImages', lightImage);
         }
     
-        // moldImages가 배열인지 확인
-        if (Array.isArray(moldImages)) {
-            moldImages.forEach((image, index) => {
-                if (image) {
-                    formData.append('moldImages', image);
+        
+                if (moldImages) {
+                    formData.append('moldImages', moldImages);
+                }
+
+        formData.append('request_id', request_id);
+    
+        const answers = [];
+        const fileCounts = [];
+        let filesAdded = false;
+    
+        requests.forEach((request, index) => {
+            answers.push(request.text);
+            fileCounts.push(request.images.length);
+            request.images.forEach(image => {
+                if (image.file) {
+                    formData.append('files', image.file); // 파일 객체를 FormData에 추가
+                    filesAdded = true;
                 }
             });
+        });
+    
+        formData.append('plusAnswerData', JSON.stringify({ answers, fileCounts }));
+    
+        // 파일이 없는 경우 빈 Blob 추가
+        if (!filesAdded) {
+            formData.append('files', new Blob());
+        }
+
+        for (let pair of formData.entries()) {
+            console.log(`${pair[0]}:`, pair[1]);
         }
     
         try {
