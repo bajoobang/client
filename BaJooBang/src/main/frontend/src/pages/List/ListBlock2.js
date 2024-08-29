@@ -27,7 +27,7 @@ function ListBlock2({ Num, Address, Price, State, Request_id, Date }) {
 
     const handleCancel = async () => {
         try {
-            await axios.patch(`/withdraw`, { data: { request_id: Request_id } });
+            await axios.patch(`/withdraw`, { request_id: Request_id });
             alert('구매가 취소되었습니다.');
             // Optionally, refresh the list or update the state to reflect the cancellation
         } catch (error) {

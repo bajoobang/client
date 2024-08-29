@@ -13,6 +13,7 @@ import HelpMap from './HelpPage/helpmap';
 import DoMap from './DoPage/domap';
 import Imformation from "./HelpPage/helpinfo";
 import RequestForm from './pages/RequestForm/RequestForm';
+import InputRequestPage from './pages/RequestForm/InputRequestPage';
 import MyPage from './pages/MyPage/Mypage';
 import ListPage1 from './pages/List/ListPage1';
 import ListPage2 from './pages/List/ListPage2';
@@ -38,7 +39,7 @@ function App() {
           <Route path='/helpinfo/:house_id' element={<Imformation positions={positions} />}></Route>
           <Route path="/request/:id" element={<RequestForm />} />
           {/* <Route path="/request" element={<RequestForm />} /> */}
-          {/* <Route path="/request" element={<RequestForm />} /> */}
+          <Route path="/inputRequest/:id" element={<InputRequestPage />} />
           <Route path='/member' element={<MyPage />} />
           <Route path='/member/inquiry' element={<ListPage1 />} />
           <Route path='/member/registered' element={<ListPage2 />} />

@@ -24,8 +24,16 @@ function ListBlock4({ Num, Address, Price, Date, Request_id, State }) {
         }
     };
 
+    const handleClick = () => {
+        if (State === '매칭 전' || State === '매칭 완료') {
+            navigate(`/inputRequest/${Request_id}`);
+        } else {
+            navigate(`/request/${Request_id}`);
+        }
+    };
+    
     return (
-        <div onClick={() => navigate(`/request/${Request_id}`)} className='ListBlockContainer'>
+        <div onClick={handleClick} className='ListBlockContainer'>
             <div className='ListBlockHeader'>
                 {Address}
             </div>

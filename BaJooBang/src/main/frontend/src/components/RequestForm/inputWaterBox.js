@@ -3,7 +3,7 @@ import './CircleSelector.css';
 import './waterBox.css';
 import { ReactComponent as Plus } from '../../components/images/plus_gray.svg';
 
-function WaterBox({ Icon, title, complete, savedState, onChange }) {
+function InputWaterBox({ Icon, title, complete, savedState, onChange, onImageChange }) {
     const [selected, setSelected] = useState(savedState?.selected || null);
     const [hotWaterTime1, setHotWaterTime1] = useState(savedState?.hotWaterTime1 || '');
     const [hotWaterTime2, setHotWaterTime2] = useState(savedState?.hotWaterTime2 || '');
@@ -34,11 +34,14 @@ function WaterBox({ Icon, title, complete, savedState, onChange }) {
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
-                setImage(reader.result);
+                const result = reader.result;
+                setImage(result);
+                if (onImageChange) onImageChange(result); // 상위 컴포넌트로 이미지 전달
             };
             reader.readAsDataURL(file);
         }
     };
+    
 
     const toggleModal = () => {
         setIsModalOpen(!isModalOpen);
@@ -114,4 +117,4 @@ function WaterBox({ Icon, title, complete, savedState, onChange }) {
     );
 }
 
-export default WaterBox;
+export default InputWaterBox;

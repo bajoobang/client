@@ -30,13 +30,13 @@ function RequestForm() {
     let house_id = null;
     let request_id = null;
 
-    // if (id.startsWith('a')) {
-    //     house_id = id.substring(1);
-    // } else {
-    //     request_id = id;
-    // }
+    if (id.startsWith('a')) {
+        house_id = id.substring(1);
+    } else {
+        request_id = id;
+    }
 
-    //console.log("Location state:", location.state);
+    // console.log("Location state:", location.state);
 
     const content = location.state ? location.state.content : '기본값';
 
@@ -265,9 +265,12 @@ function RequestForm() {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            console.log('Request success:', response.data);
+            
+            const kakaoUrl = response.data;
+            window.open(kakaoUrl, "_blank", "noopener, noreferrer");
+
             toast.success('발품을 성공적으로 등록하였습니다.');
-            navigate('/domap');
+            navigate('/mypage');
         } catch (error) {
             console.error('Register failed:', error);
             toast.error('발품 등록을 실패하였습니다.');
@@ -418,6 +421,83 @@ function RequestForm() {
     }, [write, request_id]);
     
     
+    // 이미지 상태 관리
+    const [waterImages, setWaterImages] = useState([]); // 수압 이미지 상태
+    const [lightImage, setLightImage] = useState(null); // 채광 이미지 상태
+    const [moldImages, setMoldImages] = useState([]); // 곰팡이 이미지 상태
+
+    // 이미지 변경 핸들러
+    const handleWaterImageChange = (images) => {
+        setWaterImages(images);
+    };
+
+    const handleLightImageChange = (image) => {
+        setLightImage(image);
+    };
+
+    const handleMoldImageChange = (images) => {
+        setMoldImages(images);
+    };
+    
+    const handleSubmit = async () => {
+        const formData = new FormData();
+    
+        
+                if (waterImages) {
+                    formData.append('waterImages', waterImages);
+                }
+            
+    
+        // lightImage는 단일 이미지이므로 forEach를 사용하지 않습니다.
+        if (lightImage) {
+            formData.append('lightImages', lightImage);
+        }
+    
+        
+                if (moldImages) {
+                    formData.append('moldImages', moldImages);
+                }
+
+        formData.append('request_id', request_id);
+    
+        const answers = [];
+        const fileCounts = [];
+        let filesAdded = false;
+    
+        requests.forEach((request, index) => {
+            answers.push(request.text);
+            fileCounts.push(request.images.length);
+            request.images.forEach(image => {
+                if (image.file) {
+                    formData.append('files', image.file); // 파일 객체를 FormData에 추가
+                    filesAdded = true;
+                }
+            });
+        });
+    
+        formData.append('plusAnswerData', JSON.stringify({ answers, fileCounts }));
+    
+        // 파일이 없는 경우 빈 Blob 추가
+        if (!filesAdded) {
+            formData.append('files', new Blob());
+        }
+
+        for (let pair of formData.entries()) {
+            console.log(`${pair[0]}:`, pair[1]);
+        }
+    
+        try {
+            // 서버에 formData 전송
+            const response = await axios.patch(`/balpoom-form`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            console.log(response.data);
+        } catch (error) {
+            console.error('이미지 업로드 중 오류 발생:', error);
+        }
+    };
     
     
     
@@ -470,6 +550,7 @@ function RequestForm() {
                             complete={complete} 
                             savedState={waterState.sink} 
                             onChange={(state) => handleWaterStateChange('sink', state)} 
+                            onImageChange={handleWaterImageChange}
                         />
                         <InputWaterBox 
                             Icon={Sink2} 
@@ -477,6 +558,7 @@ function RequestForm() {
                             complete={complete} 
                             savedState={waterState.basin} 
                             onChange={(state) => handleWaterStateChange('basin', state)} 
+                            onImageChange={handleWaterImageChange}
                         />
                         <InputWaterBox 
                             Icon={Shower} 
@@ -484,6 +566,7 @@ function RequestForm() {
                             complete={complete} 
                             savedState={waterState.shower} 
                             onChange={(state) => handleWaterStateChange('shower', state)} 
+                            onImageChange={handleWaterImageChange}
                         />
                     </div>
                 </div>
@@ -497,7 +580,7 @@ function RequestForm() {
                         complete ? 
                         <LightSelect complete={true} savedState={lightState} />
                         :
-                        <InputLight />
+                        <InputLight onImageChange={handleLightImageChange} />
                     }
 
                     
@@ -520,11 +603,11 @@ function RequestForm() {
                         </>
                         :
                         <>
-                            <InputMoldBox title={'거실'} />
-                            <InputMoldBox title={'화장실'} />
-                            <InputMoldBox title={'베란다'} />
-                            <InputMoldBox title={'신발장'} />
-                            <InputMoldBox title={'창틀'} />
+                            <InputMoldBox title={'거실'} onImageChange={handleMoldImageChange} />
+                            <InputMoldBox title={'화장실'} onImageChange={handleMoldImageChange} />
+                            <InputMoldBox title={'베란다'} onImageChange={handleMoldImageChange} />
+                            <InputMoldBox title={'신발장'} onImageChange={handleMoldImageChange} />
+                            <InputMoldBox title={'창틀'} onImageChange={handleMoldImageChange} />
                         </>
                     }
 
@@ -624,7 +707,7 @@ function RequestForm() {
                 <div style={{ width: '100%', display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
                     {write ? (
                         <div onClick={ WritePost} style={{ width: '9vw', height: '3.7vw', backgroundColor: '#E9EBEF', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <p style={{ fontSize: '1vw', color: '#5F5F5F', marginLeft: '0.3vw' }}>발품 등록</p>
+                            <p style={{ fontSize: '1vw', color: '#5F5F5F', marginLeft: '0.3vw' }}>등록 및 결제</p>
                         </div>
                     ) : (
                         apply ? (
@@ -640,7 +723,7 @@ function RequestForm() {
                                 )
                             )
                             :
-                            <div onClick={CompletePost} style={{ width: '9vw', height: '3.7vw', backgroundColor: '#E9EBEF', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <div onClick={handleSubmit} style={{ width: '9vw', height: '3.7vw', backgroundColor: '#E9EBEF', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <Check />
                                 <p style={{ fontSize: '1vw', color: '#5F5F5F', marginLeft: '0.3vw' }}>발품 작성</p>
                             </div>
@@ -684,6 +767,9 @@ function RequestForm() {
                                 </div>
                             </div>
                         </div>
+
+
+                        
                     ) : (
                         <div className='modal' onClick={closeModal}>
                             <div className='modal-content' onClick={(e) => e.stopPropagation()}>
