@@ -438,16 +438,22 @@ function RequestForm() {
     
     const handleSubmit = async () => {
         const formData = new FormData();
-        const images = [...waterImages, lightImage, ...moldImages]; // 모든 이미지를 하나의 배열로 결합
-        const imageCounts = [waterImages.length, lightImage ? 1 : 0, moldImages.length]; // 이미지 개수 배열
 
-        images.forEach((image, index) => {
-            if (image) {
-                formData.append('images', image);
+        waterImages.forEach((image, index) => {
+            if(image) {
+                formData.append('waterImages', image)
             }
-        });
-
-        formData.append('imageCounts', JSON.stringify(imageCounts));
+        })
+        lightImage.forEach((image, index) => {
+            if(image) {
+                formData.append('ligntImages', image)
+            }
+        })
+        moldImages.forEach((image, index) => {
+            if(image) {
+                formData.append('moldImages', image)
+            }
+        })
 
         try {
             // 서버에 formData 전송
