@@ -22,6 +22,8 @@ import ListPage4 from './pages/List/ListPage4';
 import ListPage5 from './pages/List/ListPage5';
 import Matching from './pages/Matching/Matching';
 import Homepage from './pages/Home/Home';
+import AboutPage from './Aboutus/Aboutus';
+
 import "./fonts/fonts.css";
 
 function App() {
@@ -36,6 +38,7 @@ function App() {
           <Route path="/helpmap" element={<HelpMap />} />
           <Route path="/domap" element={<DoMap/>} />
           <Route path="/mypage" element={<MyPage/>} />
+          <Route path="/about" element={<AboutPage/>}/>
           <Route path='/helpinfo/:house_id' element={<Imformation positions={positions} />}></Route>
           <Route path="/request/:id" element={<RequestForm />} />
           {/* <Route path="/request" element={<RequestForm />} /> */}
