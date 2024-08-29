@@ -37,7 +37,7 @@ function ListBlock2({ Num, Address, Price, State, Request_id, Date }) {
     };
 
     return(
-        <div className='ListBlockContainer'>
+        <div onClick={() => navigate(`/request/${Request_id}`)} className='ListBlockContainer'>
             <div className='ListBlockHeader'>
                 {Address}
                 {(State !== '작성 완료' && State !== '평가 완료') && (
