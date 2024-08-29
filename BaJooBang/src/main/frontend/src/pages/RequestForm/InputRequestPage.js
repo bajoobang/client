@@ -422,42 +422,121 @@ function RequestForm() {
     
     
     // 이미지 상태 관리
-    const [waterImages, setWaterImages] = useState([]); // 수압 이미지 상태
+    const [waterImageSink, setWaterImageSink] = useState(null); // 싱크대 수압 이미지 상태
+    const [waterImageBasin, setWaterImageBasin] = useState(null); // 세면대 수압 이미지 상태
+    const [waterImageShower, setWaterImageShower] = useState(null); // 샤워기 수압 이미지 상태
     const [lightImage, setLightImage] = useState(null); // 채광 이미지 상태
-    const [moldImages, setMoldImages] = useState([]); // 곰팡이 이미지 상태
+    const [moldImagesLivingRoom, setMoldImagesLivingRoom] = useState([]); // 곰팡이 이미지 상태
+    const [moldImagesBathRoom, setMoldImagesBathRoom] = useState([]); // 곰팡이 이미지 상태
+    const [moldImagesTerrace, setMoldImagesTerrace] = useState([]); // 곰팡이 이미지 상태
+    const [moldImagesShoeRack, setMoldImagesShoeRack] = useState([]); // 곰팡이 이미지 상태
+    const [moldImagesWindowFrame, setMoldImagesWindowFrame] = useState([]); // 곰팡이 이미지 상태
+
+    const jsonData = {
+        timeWater1: waterState.sink.hotWaterTime1,
+        timeWater2: waterState.sink.hotWaterTime2,
+        timeWash1: waterState.basin.hotWaterTime1,
+        timeWash2: waterState.basin.hotWaterTime2,
+        timeShower1: waterState.shower.hotWaterTime1,
+        timeShower2: waterState.shower.hotWaterTime2,
+    };
 
     // 이미지 변경 핸들러
-    const handleWaterImageChange = (images) => {
-        setWaterImages(images);
+    const handleWaterImageChangeSink = (image) => {
+        setWaterImageSink(image);
     };
+
+    const handleWaterImageChangeBasin = (image) => {
+        setWaterImageBasin(image);
+    };
+
+    const handleWaterImageChangeShower = (image) => {
+        setWaterImageShower(image);
+    };
+
 
     const handleLightImageChange = (image) => {
         setLightImage(image);
     };
 
-    const handleMoldImageChange = (images) => {
-        setMoldImages(images);
+    const handleMoldImageChangeLivingRoom = (images) => {
+        setMoldImagesLivingRoom(images);
+    };
+
+    const handleMoldImageChangeBathRoom = (images) => {
+        setMoldImagesBathRoom(images);
+    };
+
+    const handleMoldImageChangeShoeRack = (images) => {
+        setMoldImagesShoeRack(images);
+    };
+
+    const handleMoldImageChangeWindowFrame = (images) => {
+        setMoldImagesWindowFrame(images);
+    };
+
+    const handleMoldImageChangeTerrace = (images) => {
+        setMoldImagesTerrace(images);
     };
     
     const handleSubmit = async () => {
         const formData = new FormData();
-    
-        
-                if (waterImages) {
-                    formData.append('waterImages', waterImages);
-                }
+
+
+        // 각 컴포넌트의 이미지를 개별적으로 FormData에 추가
+        if (waterImageSink) {
+            formData.append('waterImages', waterImageSink);
+        } else {
+            formData.append('waterImages', new Blob());
+        }
+
+        if (waterImageBasin) {
+            formData.append('waterImages', waterImageBasin);
+        } else {
+            formData.append('waterImages', new Blob());
+        }
+
+        if (waterImageShower) {
+            formData.append('waterImages', waterImageShower);
+        } else {
+            formData.append('waterImages', new Blob());
+        }
             
     
         // lightImage는 단일 이미지이므로 forEach를 사용하지 않습니다.
         if (lightImage) {
-            formData.append('lightImages', lightImage);
+            formData.append('lightImage', lightImage);
         }
     
         
-                if (moldImages) {
-                    formData.append('moldImages', moldImages);
-                }
+        if (moldImagesLivingRoom) {
+            formData.append('moldImages', moldImagesLivingRoom);
+        }
+        if (moldImagesBathRoom) {
+            formData.append('waterImages', moldImagesBathRoom);
+        } else {
+            formData.append('waterImages', new Blob());
+        }
 
+        if (moldImagesTerrace) {
+            formData.append('waterImages', moldImagesTerrace);
+        } else {
+            formData.append('waterImages', new Blob());
+        }
+
+        if (moldImagesShoeRack) {
+            formData.append('waterImages', moldImagesShoeRack);
+        } else {
+            formData.append('waterImages', new Blob());
+        }
+
+        if (moldImagesWindowFrame) {
+            formData.append('waterImages', moldImagesWindowFrame);
+        } else {
+            formData.append('waterImages', new Blob());
+        }
+
+        formData.append('jsonData', JSON.stringify(jsonData));
         formData.append('request_id', request_id);
     
         const answers = [];
@@ -550,7 +629,7 @@ function RequestForm() {
                             complete={complete} 
                             savedState={waterState.sink} 
                             onChange={(state) => handleWaterStateChange('sink', state)} 
-                            onImageChange={handleWaterImageChange}
+                            onImageChange={handleWaterImageChangeSink}
                         />
                         <InputWaterBox 
                             Icon={Sink2} 
@@ -558,7 +637,7 @@ function RequestForm() {
                             complete={complete} 
                             savedState={waterState.basin} 
                             onChange={(state) => handleWaterStateChange('basin', state)} 
-                            onImageChange={handleWaterImageChange}
+                            onImageChange={handleWaterImageChangeBasin}
                         />
                         <InputWaterBox 
                             Icon={Shower} 
@@ -566,7 +645,7 @@ function RequestForm() {
                             complete={complete} 
                             savedState={waterState.shower} 
                             onChange={(state) => handleWaterStateChange('shower', state)} 
-                            onImageChange={handleWaterImageChange}
+                            onImageChange={handleWaterImageChangeShower}
                         />
                     </div>
                 </div>
@@ -603,11 +682,11 @@ function RequestForm() {
                         </>
                         :
                         <>
-                            <InputMoldBox title={'거실'} onImageChange={handleMoldImageChange} />
-                            <InputMoldBox title={'화장실'} onImageChange={handleMoldImageChange} />
-                            <InputMoldBox title={'베란다'} onImageChange={handleMoldImageChange} />
-                            <InputMoldBox title={'신발장'} onImageChange={handleMoldImageChange} />
-                            <InputMoldBox title={'창틀'} onImageChange={handleMoldImageChange} />
+                            <InputMoldBox title={'거실'} onImageChange={handleMoldImageChangeLivingRoom} />
+                            <InputMoldBox title={'화장실'} onImageChange={handleMoldImageChangeBathRoom} />
+                            <InputMoldBox title={'베란다'} onImageChange={handleMoldImageChangeTerrace} />
+                            <InputMoldBox title={'신발장'} onImageChange={handleMoldImageChangeShoeRack} />
+                            <InputMoldBox title={'창틀'} onImageChange={handleMoldImageChangeWindowFrame} />
                         </>
                     }
 

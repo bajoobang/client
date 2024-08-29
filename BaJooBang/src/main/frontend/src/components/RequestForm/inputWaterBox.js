@@ -30,15 +30,16 @@ function InputWaterBox({ Icon, title, complete, savedState, onChange, onImageCha
     }, [complete, selected, hotWaterTime1, hotWaterTime2, onChange]);
 
     const handleImageUpload = (e) => {
-        const file = e.target.files[0];
+        const file = e.target.files[0]; // 파일 객체 자체를 가져옴
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
                 const result = reader.result;
-                setImage(result);
-                if (onImageChange) onImageChange(result); // 상위 컴포넌트로 이미지 전달
+                setImage(result); // Base64로 이미지를 보여주는 부분은 유지
+
+                if (onImageChange) onImageChange(file); // 파일 객체를 상위 컴포넌트로 전달
             };
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(file); // Base64로 읽음
         }
     };
     
