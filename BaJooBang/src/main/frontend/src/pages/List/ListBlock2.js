@@ -14,7 +14,7 @@ function ListBlock2({ Num, Address, Price, State, Request_id, Date }) {
                 return { color: '#FFC633', backgroundColor: '#FFFCE5' };
             case '작성 완료':
                 return { color: '#3888FF', backgroundColor: '#E5F0FF' };
-            case '평가 완료':
+            case '구매 확정':
                 return { color : '#7B78FF', backgroundColor: '#EDEAFF' };
             case '환불 중':
                 return { color : '#31A82F', backgroundColor: '#DAFCDD' };
@@ -36,11 +36,20 @@ function ListBlock2({ Num, Address, Price, State, Request_id, Date }) {
         }
     };
 
+    const handleClick = () => {
+        if (State === '매칭 전' || State === '매칭 완료') {
+            navigate(`/inputRequest/${Request_id}`);
+        } else {
+            navigate(`/request/${Request_id}`);
+        }
+    };
+    
+
     return(
-        <div onClick={() => navigate(`/request/${Request_id}`)} className='ListBlockContainer'>
+        <div onClick={handleClick} className='ListBlockContainer'>
             <div className='ListBlockHeader'>
                 {Address}
-                {(State !== '작성 완료' && State !== '평가 완료') && (
+                {(State === '매칭 전') && (
                     <button className='cancel-button' onClick={handleCancel}>구매 취소</button>
                 )}
             </div>

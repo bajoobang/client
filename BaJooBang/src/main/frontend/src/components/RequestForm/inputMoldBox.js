@@ -19,7 +19,7 @@ function InputMoldBox({ title, onImageChange }) {
             reader.onload = () => {
                 const result = reader.result;
                 setImage(result);
-                if (onImageChange) onImageChange(result);
+                if (onImageChange) onImageChange(file);
             };
             reader.readAsDataURL(file);
         }

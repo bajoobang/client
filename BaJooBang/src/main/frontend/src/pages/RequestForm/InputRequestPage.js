@@ -277,71 +277,6 @@ function RequestForm() {
         }
     }
     
-    // 발품인이 발품서 작성하는 api
-    async function CompletePost() {
-        const formData = new FormData();
-        console.log(moldStates.livingRoom.hasItem)
-        console.log(moldStates.bathroom.hasItem)
-    
-        const jsonData = {
-            powerWater: waterState.sink.selected,
-            timeWater1: waterState.sink.hotWaterTime1,
-            timeWater2: waterState.sink.hotWaterTime2,
-            powerWash: waterState.basin.selected,
-            timeWash1: waterState.basin.hotWaterTime1,
-            timeWash2: waterState.basin.hotWaterTime2,
-            powerShower: waterState.shower.selected,
-            timeShower1: waterState.shower.hotWaterTime1,
-            timeShower2: waterState.shower.hotWaterTime2,
-            lighting: lightState,
-            moldLiving: moldStates.livingRoom.hasItem,
-            moldRest: moldStates.bathroom.hasItem,
-            moldVeranda: moldStates.balcony.hasItem,
-            moldShoes: moldStates.shoeRack.hasItem,
-            moldWindow: moldStates.windowFrame.hasItem,
-        };
-        console.log('곰팜 : '+ moldStates.livingRoom.hasItem)
-    
-        formData.append('jsonData', JSON.stringify(jsonData));
-        formData.append('request_id', request_id);
-    
-        const answers = [];
-        const fileCounts = [];
-        let filesAdded = false;
-    
-        requests.forEach((request, index) => {
-            answers.push(request.text);
-            fileCounts.push(request.images.length);
-            request.images.forEach(image => {
-                if (image.file) {
-                    formData.append('files', image.file); // 파일 객체를 FormData에 추가
-                    filesAdded = true;
-                }
-            });
-        });
-    
-        formData.append('plusAnswerData', JSON.stringify({ answers, fileCounts }));
-    
-        // 파일이 없는 경우 빈 Blob 추가
-        if (!filesAdded) {
-            formData.append('files', new Blob());
-        }
-    
-        try {
-            const response = await axios.patch(`/balpoom-form`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-            console.log('Request success:', response.data);
-            toast.success('발품서 작성이 완료되었습니다.');
-            navigate('/domap');
-        } catch (error) {
-            toast.error('발품서 작성을 실패하였습니다.');
-            console.error('Request failed:', error);
-        }
-    }
-    
     
     
 
@@ -427,36 +362,53 @@ function RequestForm() {
     const [moldImages, setMoldImages] = useState([]); // 곰팡이 이미지 상태
 
     // 이미지 변경 핸들러
-    const handleWaterImageChange = (images) => {
-        setWaterImages(images);
+    const handleWaterImageChange = (image) => {
+        setWaterImages(prevImages => [...prevImages, image]); // 이미지 배열에 새 이미지를 추가
+        console.log('나 실행됨.')
     };
 
     const handleLightImageChange = (image) => {
         setLightImage(image);
     };
 
-    const handleMoldImageChange = (images) => {
-        setMoldImages(images);
+    const handleMoldImageChange = (image) => {
+        setMoldImages(prevImages => [...prevImages, image]); // 이미지 배열에 새 이미지를 추가
+        console.log('나 실행됨.')
     };
     
     const handleSubmit = async () => {
         const formData = new FormData();
+
+        const jsonData = {
+            timeWater1: waterState.sink.hotWaterTime1,
+            timeWater2: waterState.sink.hotWaterTime2,
+            timeWash1: waterState.basin.hotWaterTime1,
+            timeWash2: waterState.basin.hotWaterTime2,
+            timeShower1: waterState.shower.hotWaterTime1,
+            timeShower2: waterState.shower.hotWaterTime2,
+        };
+        console.log('곰팜 : '+ moldStates.livingRoom.hasItem)
     
-        
-                if (waterImages) {
-                    formData.append('waterImages', waterImages);
-                }
-            
-    
-        // lightImage는 단일 이미지이므로 forEach를 사용하지 않습니다.
-        if (lightImage) {
-            formData.append('lightImages', lightImage);
+        formData.append('jsonData', JSON.stringify(jsonData));
+        console.log('수압 이미지 길이: '+ waterImages.length);
+        if (waterImages.length > 0) {
+            console.log('oooo'+waterImages.length)
+            waterImages.forEach((image, index) => {
+                formData.append(`waterImages`, image);
+            });
         }
     
-        
-                if (moldImages) {
-                    formData.append('moldImages', moldImages);
-                }
+        // Append lightImage
+        if (lightImage) {
+            formData.append('lightImage', lightImage);
+        }
+    
+        // Append moldImages
+        if (moldImages.length > 0) {
+            moldImages.forEach((image, index) => {
+                formData.append(`moldImages`, image);
+            });
+        }
 
         formData.append('request_id', request_id);
     
@@ -494,6 +446,7 @@ function RequestForm() {
                 }
             });
             console.log(response.data);
+            navigate('/mypage');
         } catch (error) {
             console.error('이미지 업로드 중 오류 발생:', error);
         }
@@ -562,7 +515,7 @@ function RequestForm() {
                         />
                         <InputWaterBox 
                             Icon={Shower} 
-                            title={'샤워기'} 
+                            title={'샤워기'}
                             complete={complete} 
                             savedState={waterState.shower} 
                             onChange={(state) => handleWaterStateChange('shower', state)} 
@@ -669,8 +622,7 @@ function RequestForm() {
                                                 disabled={complete} // Disable textarea if complete is true
                                             />
                                         </div>
-
-
+                                        
                                         <div className='plusrequestImageBox' ref={el => imageBoxRefs.current[index] = el}>
                                         {input.images.map((image, imgIndex) => (
                                             <img

@@ -244,15 +244,31 @@ function RequestForm() {
 
     // 취소 사유 전송 함수
     const sendCancelReason = async (request_id, cancelReason) => {
+        console.log('Cancel Response:', cancelReason);
         try {
             const response = await axios.post(`/refund`, {
                 request_id: request_id,
-                reasonForReFund: cancelReason,
+                reasonForRefund: cancelReason,
             });
             toast.success('구매 취소가 완료되었습니다.');
             console.log('Cancel Response:', response);
         } catch (error) {
             toast.error('구매 취소에 실패하였습니다. 다시 시도해주세요');
+            console.error('Error sending cancel reason:', error);
+        }
+    };
+
+    // 구매 확정 함수
+    const sendConfirmReason = async (request_id) => {
+        try {
+            const response = await axios.patch(`/confirm`, {
+                request_id: request_id,
+                reasonForReFund: cancelReason,
+            });
+            toast.success('구매 확정이 완료되었습니다.');
+            console.log('Cancel Response:', response);
+        } catch (error) {
+            toast.error('구매 확정에 실패하였습니다. 다시 시도해주세요');
             console.error('Error sending cancel reason:', error);
         }
     };
@@ -291,69 +307,69 @@ function RequestForm() {
     }
     
     // 발품인이 발품서 작성하는 api
-    async function CompletePost() {
-        const formData = new FormData();
-        console.log(moldStates.livingRoom.hasItem)
-        console.log(moldStates.bathroom.hasItem)
+    // async function CompletePost() {
+    //     const formData = new FormData();
+    //     console.log(moldStates.livingRoom.hasItem)
+    //     console.log(moldStates.bathroom.hasItem)
     
-        const jsonData = {
-            powerWater: waterState.sink.selected,
-            timeWater1: waterState.sink.hotWaterTime1,
-            timeWater2: waterState.sink.hotWaterTime2,
-            powerWash: waterState.basin.selected,
-            timeWash1: waterState.basin.hotWaterTime1,
-            timeWash2: waterState.basin.hotWaterTime2,
-            powerShower: waterState.shower.selected,
-            timeShower1: waterState.shower.hotWaterTime1,
-            timeShower2: waterState.shower.hotWaterTime2,
-            lighting: lightState,
-            moldLiving: moldStates.livingRoom.hasItem,
-            moldRest: moldStates.bathroom.hasItem,
-            moldVeranda: moldStates.balcony.hasItem,
-            moldShoes: moldStates.shoeRack.hasItem,
-            moldWindow: moldStates.windowFrame.hasItem,
-        };
-        console.log('곰팜 : '+ moldStates.livingRoom.hasItem)
+    //     const jsonData = {
+    //         powerWater: waterState.sink.selected,
+    //         timeWater1: waterState.sink.hotWaterTime1,
+    //         timeWater2: waterState.sink.hotWaterTime2,
+    //         powerWash: waterState.basin.selected,
+    //         timeWash1: waterState.basin.hotWaterTime1,
+    //         timeWash2: waterState.basin.hotWaterTime2,
+    //         powerShower: waterState.shower.selected,
+    //         timeShower1: waterState.shower.hotWaterTime1,
+    //         timeShower2: waterState.shower.hotWaterTime2,
+    //         lighting: lightState,
+    //         moldLiving: moldStates.livingRoom.hasItem,
+    //         moldRest: moldStates.bathroom.hasItem,
+    //         moldVeranda: moldStates.balcony.hasItem,
+    //         moldShoes: moldStates.shoeRack.hasItem,
+    //         moldWindow: moldStates.windowFrame.hasItem,
+    //     };
+    //     console.log('곰팜 : '+ moldStates.livingRoom.hasItem)
     
-        formData.append('jsonData', JSON.stringify(jsonData));
-        formData.append('request_id', request_id);
+    //     formData.append('jsonData', JSON.stringify(jsonData));
+    //     formData.append('request_id', request_id);
     
-        const answers = [];
-        const fileCounts = [];
-        let filesAdded = false;
+    //     const answers = [];
+    //     const fileCounts = [];
+    //     let filesAdded = false;
     
-        requests.forEach((request, index) => {
-            answers.push(request.text);
-            fileCounts.push(request.images.length);
-            request.images.forEach(image => {
-                if (image.file) {
-                    formData.append('files', image.file); // 파일 객체를 FormData에 추가
-                    filesAdded = true;
-                }
-            });
-        });
+    //     requests.forEach((request, index) => {
+    //         answers.push(request.text);
+    //         fileCounts.push(request.images.length);
+    //         request.images.forEach(image => {
+    //             if (image.file) {
+    //                 formData.append('files', image.file); // 파일 객체를 FormData에 추가
+    //                 filesAdded = true;
+    //             }
+    //         });
+    //     });
     
-        formData.append('plusAnswerData', JSON.stringify({ answers, fileCounts }));
+    //     formData.append('plusAnswerData', JSON.stringify({ answers, fileCounts }));
     
-        // 파일이 없는 경우 빈 Blob 추가
-        if (!filesAdded) {
-            formData.append('files', new Blob());
-        }
+    //     // 파일이 없는 경우 빈 Blob 추가
+    //     if (!filesAdded) {
+    //         formData.append('files', new Blob());
+    //     }
     
-        try {
-            const response = await axios.patch(`/balpoom-form`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-            console.log('Request success:', response.data);
-            toast.success('발품서 작성이 완료되었습니다.');
-            navigate('/domap');
-        } catch (error) {
-            toast.error('발품서 작성을 실패하였습니다.');
-            console.error('Request failed:', error);
-        }
-    }
+    //     try {
+    //         const response = await axios.patch(`/balpoom-form`, formData, {
+    //             headers: {
+    //                 'Content-Type': 'multipart/form-data'
+    //             }
+    //         });
+    //         console.log('Request success:', response.data);
+    //         toast.success('발품서 작성이 완료되었습니다.');
+    //         navigate('/domap');
+    //     } catch (error) {
+    //         toast.error('발품서 작성을 실패하였습니다.');
+    //         console.error('Request failed:', error);
+    //     }
+    // }
     
     
     
@@ -412,7 +428,7 @@ function RequestForm() {
                         setApply(true);
                         setComplete(true);
                         setEvaluate(false);
-                    } else if (data.balpoomForm.status === '평가 완료') {
+                    } else {
                         setWrite(false);
                         setApply(true);
                         setComplete(true);
@@ -424,6 +440,7 @@ function RequestForm() {
                     updateWaterState(data.balpoomForm);
                     updateLightState(data.balpoomForm.lighting);
                     updateMoldState(data.balpoomForm);
+                    console.log('발품 데이터: '+data.balpoomForm.moldLiving);
                 } catch (error) {
                     console.error('Error fetching property info:', error);
                 }
@@ -456,6 +473,8 @@ function RequestForm() {
         // 구매 취소가 선택된 경우, 추가적으로 취소 사유를 전송
         if (isCancel) {
             await sendCancelReason(request_id, cancelReason);
+        } else {
+            await sendConfirmReason(request_id);
         }
 
         setEvaluate(true);
@@ -682,7 +701,7 @@ function RequestForm() {
                                 )
                             )
                             :
-                            <div onClick={CompletePost} style={{ width: '9vw', height: '3.7vw', backgroundColor: '#E9EBEF', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <div onClick={{}} style={{ width: '9vw', height: '3.7vw', backgroundColor: '#E9EBEF', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <Check />
                                 <p style={{ fontSize: '1vw', color: '#5F5F5F', marginLeft: '0.3vw' }}>발품 작성</p>
                             </div>
