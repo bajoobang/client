@@ -54,10 +54,35 @@ function ListBlock2({ Num, Address, Price, State, Request_id, Date }) {
                 )}
             </div>
             <div className='ListBlockBody'>
-                <div>가격 : {Price}</div><p></p>
-                <div>등록일 : {Date}</div>
-                <div><p><p></p></p></div><p></p>
-                <div style={{ padding: '5px', borderRadius: '8px', fontSize: '13.5px', ...getStateStyle(State), textAlign:'center' }}>
+                <div style={{width: '250px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', marginTop: '20px', marginBottom: '20px'}}>
+                    <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
+                        <div style={{fontWeight: '600'}}>발품 가격</div><p></p>
+                        <div style={{fontSize: '14px', marginTop: '-30px'}} >{Price}</div>
+                    </div>
+                    <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
+                        <div style={{fontWeight: '600'}}>거래 기한</div><p></p>
+                        <div style={{fontSize: '14px', marginTop: '-30px'}}>{Date}</div>
+                    </div>
+                    
+                </div>
+                
+                <div style={{width: '250px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', marginTop: '20px', marginBottom: '30px'}}>
+                    <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
+                        <div style={{fontWeight: '600'}}>중개인 연락처</div><p></p>
+                        <div style={{fontSize: '12px', marginTop: '-30px'}} >010-1234-5678</div>
+                    </div>
+                    <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
+                        <div style={{fontWeight: '600'}}>중개사 위치</div><p></p>
+                        <div style={{fontSize: '12px', marginTop: '-30px'}}>서울 중구 필동로1길 30</div>
+                    </div>
+                    
+                </div>
+                {/* <div style={{fontWeight: '600'}}>중개인 연락처</div><p></p>
+                <div style={{fontSize: '14px', marginTop: '-30px', marginBottom: '30px'}}>010-1234-5678</div>
+                <div style={{fontWeight: '600'}}>중개사 위치</div><p></p>
+                <div style={{fontSize: '14px', marginTop: '-30px', marginBottom: '30px'}}>서울 중구 필동로1길 30</div>
+                <div></div> */}
+                <div style={{ padding: '5px', borderRadius: '8px', fontSize: '13.5px', ...getStateStyle(State), textAlign:'center' } }>
                     {State}
                 </div>
             </div>

@@ -34,7 +34,7 @@ body,html {
 
 /*매물검색라인_월세전세선택 버튼*/
 .house_type_buttons {
-  margin-left:100px;
+  margin-left:40px;
 }
 .house_type_buttons button {
   border-radius: 20px;

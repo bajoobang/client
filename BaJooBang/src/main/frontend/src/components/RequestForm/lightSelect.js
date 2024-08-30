@@ -10,13 +10,13 @@ function LightSelect({ complete, savedState, onChange }) {
     }
   }, [savedState, complete]);
 
-  const handleOptionChange = useCallback((e) => {
-    if (!complete) {
-      const newValue = e.target.value;
-      setSelectedOption(newValue);
-      onChange(newValue);
-    }
-  }, [complete, onChange]);
+  // const handleOptionChange = useCallback((e) => {
+  //   if (!complete) {
+  //     const newValue = e.target.value;
+  //     setSelectedOption(newValue);
+  //     onChange(newValue);
+  //   }
+  // }, [complete, onChange]);
 
   return (
     <form style={{ display: 'flex', flexDirection: 'column', height: '10vw', justifyContent: 'space-around', marginLeft: '4vw' }}>
@@ -25,7 +25,7 @@ function LightSelect({ complete, savedState, onChange }) {
           type="radio"
           value="좋음"
           checked={selectedOption === "좋음"}
-          onChange={handleOptionChange}
+          // onChange={handleOptionChange}
           disabled={complete}
         />
         좋음
@@ -36,7 +36,7 @@ function LightSelect({ complete, savedState, onChange }) {
           type="radio"
           value="건물에 가림"
           checked={selectedOption === "건물에 가림"}
-          onChange={handleOptionChange}
+          // onChange={handleOptionChange}
           disabled={complete}
         />
         건물에 가림
@@ -47,7 +47,7 @@ function LightSelect({ complete, savedState, onChange }) {
           type="radio"
           value="해와 역방향"
           checked={selectedOption === "해와 역방향"}
-          onChange={handleOptionChange}
+          // onChange={handleOptionChange}
           disabled={complete}
         />
         해와 역방향
@@ -58,7 +58,7 @@ function LightSelect({ complete, savedState, onChange }) {
           type="radio"
           value="기타"
           checked={selectedOption === "기타"}
-          onChange={handleOptionChange}
+          // onChange={handleOptionChange}
           disabled={complete}
         />
         기타

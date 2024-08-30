@@ -558,7 +558,8 @@ function RequestForm() {
                         complete ? 
                         <LightSelect complete={true} savedState={lightState} />
                         :
-                        <LightSelect complete={false} savedState={lightState} onChange={handleLightStateChange} />
+                        // <LightSelect complete={false} savedState={lightState} onChange={handleLightStateChange} />
+                        <LightSelect complete={false} savedState={lightState} />
                     }
 
                     
