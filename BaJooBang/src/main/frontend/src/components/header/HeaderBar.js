@@ -33,7 +33,7 @@ function HeaderBar() {
   return (
     <header className="header-bar">
       <NavLink to="/" exact className="logo">
-        <h1>houser</h1>
+        <h1>BJB</h1>
       </NavLink>
       <nav className="navbar">
         <NavLink to="/" exact activeClassName="active" className="nav-item">
